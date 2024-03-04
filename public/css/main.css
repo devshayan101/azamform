@@ -2,7 +2,7 @@
 html {
   overflow-x: hidden;
 }
-
+/* //abcd */
 body {
   background: #fff;
   font-size: 14px;
@@ -20,11 +20,32 @@ body {
 }
 
 h1, h2, h3, h4 {
-  /* font-size: 38px; */
+     font-size: 38px;
   font-weight: 700;
   font-family: "Source Sans Pro", sans-serif;
 }
-
+.section-programs-head{
+  font-size: xx-large;
+  padding: 1rem;
+}
+.collapse-bar{
+  color:#000 !important;
+  font-size: x-large !important;
+  /* text-decoration: none !important; */
+}
+.collapse-bar-sub-section{
+  font-size: larger;
+}
+.medium-title{
+  font-size: x-large !important;
+  line-height: 3rem;
+}
+.medium-content{
+  font-size: large !important;
+}
+.card-text{
+  line-height: 2rem;
+}
 .script-font {
   font-family: 'Shadows Into Light', cursive;
 }
@@ -261,6 +282,15 @@ a.back-to-top i {
 a.back-to-top:hover, a.back-to-top:focus {
   text-decoration: none;
 }
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 50vh; 
+}
+
+iframe {
+  flex: 1;
+}
 
 #loader {
   position: fixed;
@@ -356,6 +386,7 @@ a.back-to-top:hover, a.back-to-top:focus {
 
 .counter-section .counter .icon {
   margin-bottom: 30px;
+  height: 2px;
 }
 
 .counter-section .counter .icon i {
@@ -933,7 +964,8 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
 
 .services-item .services-content h3 {
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  line-height: 0.7rem !important;
 }
 
 .services-item .services-content h3 a {

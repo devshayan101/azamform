@@ -5,19 +5,19 @@ let app = express();
 app.use(express.urlencoded({ extended: true }));
 
 
-var config = {
+const config = {
     key: process.env.EASEBUZZ_KEY,
     salt: process.env.EASEBUZZ_SALT,
     env: process.env.EASEBUZZ_ENV,
     enable_iframe: process.env.EASEBUZZ_IFRAME,
   };
   
-  app.get('/', function (req, res) {
+  router.get('/', function (req, res) {
     res.render('payIndex');
   });
   
   //response 
-  app.post('/response', function (req, res) {
+  router.post('/response', function (req, res) {
     function checkReverseHash(response) {
       var hashstring = config.salt + "|" + response.status + "|" + response.udf10 + "|" + response.udf9 + "|" + response.udf8 + "|" + response.udf7 +
         "|" + response.udf6 + "|" + response.udf5 + "|" + response.udf4 + "|" + response.udf3 + "|" + response.udf2 + "|" + response.udf1 + "|" +
@@ -40,14 +40,14 @@ var config = {
   
   
   //initiate_payment API
-  app.post('/initiate_payment', function (req, res) {
+  router.post('/initiate_payment', function (req, res) {
     data = req.body;
     var initiate_payment = require('./Easebuzz/initiate_payment.js');
     initiate_payment.initiate_payment(data, config, res);
   });
   
   //Transcation API  
-  app.post('/transaction', function (req, res) {
+  router.post('/transaction', function (req, res) {
     data = req.body;
     var transaction = require('./Easebuzz/transaction.js');
     transaction.transaction(data, config, res);
@@ -55,7 +55,7 @@ var config = {
   
   
   //Transcation Date API  
-  app.post('/transaction_date', function (req, res) {
+  router.post('/transaction_date', function (req, res) {
   
     data = req.body;
     var transaction_date = require('./Easebuzz/tranaction_date.js');
@@ -63,7 +63,7 @@ var config = {
   });
   
   //Payout API
-  app.post('/payout', function (req, res) {
+  router.post('/payout', function (req, res) {
   
     data = req.body;
     var payout = require('./Easebuzz/payout.js');
@@ -72,7 +72,7 @@ var config = {
   });
   
   //Refund API
-  app.post('/refund', function (req, res) {
+  router.post('/refund', function (req, res) {
     data = req.body;
     var refund = require('./Easebuzz/refund.js');
     refund.refund(data, config, res);

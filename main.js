@@ -2,85 +2,36 @@
 require('dotenv').config()
 var sha512 = require('js-sha512');
 var express = require("express");
-var app = express();
+const expressLayouts = require('express-ejs-layouts');
 var path = require("path");
-var bodyParser = require('body-parser');
-app.use(bodyParser());
-app.use('/static', express.static(path.join(__dirname, 'assets')))
-app.use('/view', express.static(path.join(__dirname, 'views')))
-app.engine('html', require('ejs').renderFile);
+const mongoose = require('mongoose')
+
+const payRoutes = require('./routes/payRoutes')
+const allRoutes = require('./routes/allRoutes')
+
+var app = express();
 app.set('view engine', 'ejs')
 
-
-var config = {
-  key: process.env.EASEBUZZ_KEY,
-  salt: process.env.EASEBUZZ_SALT,
-  env: process.env.EASEBUZZ_ENV,
-  enable_iframe: process.env.EASEBUZZ_IFRAME,
-};
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-//response 
-app.post('/response', function (req, res) {
-  function checkReverseHash(response) {
-    var hashstring = config.salt + "|" + response.status + "|" + response.udf10 + "|" + response.udf9 + "|" + response.udf8 + "|" + response.udf7 +
-      "|" + response.udf6 + "|" + response.udf5 + "|" + response.udf4 + "|" + response.udf3 + "|" + response.udf2 + "|" + response.udf1 + "|" +
-      response.email + "|" + response.firstname + "|" + response.productinfo + "|" + response.amount + "|" + response.txnid + "|" + response.key
-    hash_key = sha512.sha512(hashstring);
-    if (hash_key == req.body.hash)
-      return true;
-    else
-      return false;
-  }
-  if (checkReverseHash(req.body)) {
-    res.send(req.body);
-  }
-  res.send('false, check the hash value ');
-});
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 
-//initiate_payment API
-app.post('/initiate_payment', function (req, res) {
-  data = req.body;
-  var initiate_payment = require('./Easebuzz/initiate_payment.js');
-  initiate_payment.initiate_payment(data, config, res);
-});
+//Public Folder
+app.use(express.static('./public'));
 
-//Transcation API  
-app.post('/transaction', function (req, res) {
-  data = req.body;
-  var transaction = require('./Easebuzz/transaction.js');
-  transaction.transaction(data, config, res);
-});
+const port = process.env.PORT || 3000;
 
+mongoose.connect(process.env.MONGO_URI)
+    .then(result => app.listen(port, () => console.log(`Server started on port ${port}`)))
+    .catch(err => console.log(`db connection`, err))
 
-//Transcation Date API  
-app.post('/transaction_date', function (req, res) {
+//Routes
+app.use('/', allRoutes);
+// app.use('/pay', payRoutes);
 
-  data = req.body;
-  var transaction_date = require('./Easebuzz/tranaction_date.js');
-  transaction_date.tranaction_date(data, config, res);
-});
+//404 
+app.use((req, res) => {
+  res.status(404).render('404', { title: 'Error 404' });
+})
 
-//Payout API
-app.post('/payout', function (req, res) {
-
-  data = req.body;
-  var payout = require('./Easebuzz/payout.js');
-  payout.payout(data, config, res);
-
-});
-
-//Refund API
-app.post('/refund', function (req, res) {
-  data = req.body;
-  var refund = require('./Easebuzz/refund.js');
-  refund.refund(data, config, res);
-
-});
-
-app.listen(process.env.PORT || 3000);
-console.log("Easebuzz Payment Kit Demo server started at 3000");

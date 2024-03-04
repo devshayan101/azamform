@@ -5,9 +5,9 @@ const express = require('express');
 // const { check } = require('express-validator');
 
 
+let app = express();
 const router = express.Router()
 
-let app = express();
 app.use(express.urlencoded({ extended: true }));
 
 
@@ -44,12 +44,12 @@ router.get('/admission-form', (req, res) => {
 
 
 
-router.post('/orders', controller.orders)
+// router.post('/orders', controller.orders)
 
-router.post('/admissions', controller.formPostPayment)
+// router.post('/admissions', controller.formPostPayment)
 
 
-router.post('/submit', controller.upload, controller.submitPostPayment);
+// router.post('/submit', controller.upload, controller.submitPostPayment);
 
 // router.post('/submit', validate.formCheck);
 
