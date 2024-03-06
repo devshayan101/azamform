@@ -57,6 +57,9 @@
     margin: 5px 0;
     height: 3.5rem;
   }
+  h2{
+    font-size: 1rem;
+  }
   #hero-area .contents {
     padding: 100px 0px 60px 0px;
   }
