@@ -33,18 +33,18 @@ h1, h2, h3, h4 {
 }
 .collapse-bar{
   color:#000 !important;
-  font-size: large !important;
+  font-size: x-large !important;
   /* text-decoration: none !important; */
 }
 .collapse-bar-sub-section{
-  font-size: medium !important; 
+  font-size: larger;
 }
 .medium-title{
-  font-size: large !important;
+  font-size: x-large !important;
   line-height: 3rem;
 }
 .medium-content{
-  font-size: medium !important;
+  font-size: large !important;
 }
 .card-text{
   line-height: 2rem;
@@ -124,17 +124,13 @@ ul li, ol li {
 
 .section-title {
   color: #252525;
-  font-size: 25px;
+  font-size: 38px;
   text-align: center;
   letter-spacing: 1px;
   line-height: 1;
   margin-bottom: 48px;
   padding: 0 10px;
   position: relative;
-}
-
-.sawadwazam-img{
-  width:50%;
 }
 
 .btn {
@@ -323,7 +319,6 @@ iframe {
 
 .section-padding {
   padding: 60px 0;
-  margin-top: 30px;
 }
 
 #about .img-thumb img {

@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
     res.render('index.ejs')
 
 });
-router.get('/about', (req, res) => {
-    res.render('about', { title: 'About us' })
+router.get('/terms-and-privacy', (req, res) => {
+    res.render('termsandprivacy.ejs')
 })
 
 
