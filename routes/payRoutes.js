@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+require('dotenv').config()
+var sha512 = require('js-sha512');
 
 let app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +18,11 @@ const config = {
     res.render('payIndex');
   });
   
+  router.get('/initiate', function(req, res){
+    res.render( 'initiate_payment.ejs');
+  })
+
+
   //response 
   router.post('/response', function (req, res) {
     function checkReverseHash(response) {
@@ -42,14 +49,14 @@ const config = {
   //initiate_payment API
   router.post('/initiate_payment', function (req, res) {
     data = req.body;
-    var initiate_payment = require('./Easebuzz/initiate_payment.js');
+    var initiate_payment = require('../Easebuzz/initiate_payment.js');
     initiate_payment.initiate_payment(data, config, res);
   });
   
   //Transcation API  
   router.post('/transaction', function (req, res) {
     data = req.body;
-    var transaction = require('./Easebuzz/transaction.js');
+    var transaction = require('../Easebuzz/transaction.js');
     transaction.transaction(data, config, res);
   });
   
@@ -58,7 +65,7 @@ const config = {
   router.post('/transaction_date', function (req, res) {
   
     data = req.body;
-    var transaction_date = require('./Easebuzz/tranaction_date.js');
+    var transaction_date = require('../Easebuzz/tranaction_date.js');
     transaction_date.tranaction_date(data, config, res);
   });
   
@@ -66,7 +73,7 @@ const config = {
   router.post('/payout', function (req, res) {
   
     data = req.body;
-    var payout = require('./Easebuzz/payout.js');
+    var payout = require('../Easebuzz/payout.js');
     payout.payout(data, config, res);
   
   });
@@ -74,7 +81,9 @@ const config = {
   //Refund API
   router.post('/refund', function (req, res) {
     data = req.body;
-    var refund = require('./Easebuzz/refund.js');
+    var refund = require('../Easebuzz/refund.js');
     refund.refund(data, config, res);
   
   });
+
+module.exports = router;

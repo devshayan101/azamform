@@ -11,35 +11,50 @@ const router = express.Router()
 app.use(express.urlencoded({ extended: true }));
 
 
+
 router.get('/', (req, res) => {
     res.render('index.ejs')
-
+  });
+  
+router.get('/registraion', (req, res) => {
+    res.render('registration.ejs');
 });
+
 router.get('/terms-and-privacy', (req, res) => {
     res.render('termsandprivacy.ejs')
 })
 
 
-router.get('/contact', (req, res) => {
-    res.render('contact')
-})
+  
+// router.get('/', (req, res) => {
+//     res.render('index.ejs')
 
-router.get('/information', (req, res) => {
-    res.render('information.ejs')
-})
+// });
+// router.get('/terms-and-privacy', (req, res) => {
+//     res.render('termsandprivacy.ejs')
+// })
 
 
-router.get('/gallery', (req, res) => {
-    res.render('gallery', { title: 'Gallery' })
-})
+// router.get('/contact', (req, res) => {
+//     res.render('contact')
+// })
 
-router.post('/submit-no-payment-error', (req, res) => {
-    res.render('submit-error.ejs', { title: 'Form Error', messege_title: 'Form fees not paid!', messege_body: 'Kindly pay form fee Rs.50 first then fill admission form.' })
-})
+// router.get('/information', (req, res) => {
+//     res.render('information.ejs')
+// })
 
-router.get('/admission-form', (req, res) => {
-    res.render('admission-form', { _id: null, title: 'Admission Form', path: '=/submit-no-payment-error' })
-})
+
+// router.get('/gallery', (req, res) => {
+//     res.render('gallery', { title: 'Gallery' })
+// })
+
+// router.post('/submit-no-payment-error', (req, res) => {
+//     res.render('submit-error.ejs', { title: 'Form Error', messege_title: 'Form fees not paid!', messege_body: 'Kindly pay form fee Rs.50 first then fill admission form.' })
+// })
+
+// router.get('/admission-form', (req, res) => {
+//     res.render('admission-form', { _id: null, title: 'Admission Form', path: '=/submit-no-payment-error' })
+// })
 
 
 

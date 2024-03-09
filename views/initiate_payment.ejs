@@ -26,7 +26,7 @@
             <div class="form-container">
                 <h2>INITIATE PAYMENT API</h2>
                 <hr>
-                <form method="POST" action="/initiate_payment">
+                <form method="POST" action="/pay/initiate_payment">
                     <div class="main-form">
                         <h3>Mandatory Parameters</h3>
                         <hr>
@@ -65,13 +65,13 @@
                     
                             <div class="form-field">
                                 <label for="surl">Success URL<sup>*</sup></label>
-                                <input id="surl" class="surl" name="surl" value="http://localhost:3000/response" placeholder="http://localhost:3000/response">
+                                <input id="surl" class="surl" name="surl" value="http://localhost:3000/pay/response" placeholder="http://localhost:3000/pay/response">
                             </div>
                             
                             <div class="form-field">
                                 <label for="furl">Failure URL<sup>*</sup></label>
-                                <input id="furl" class="furl" name="furl" value="http://localhost:3000/response"
-                                placeholder="http://localhost:3000/response">
+                                <input id="furl" class="furl" name="furl" value="http://localhost:3000/pay/response"
+                                placeholder="http://localhost:3000/pay/response">
                             </div>
 
                         </div>

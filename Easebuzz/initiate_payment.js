@@ -9,7 +9,6 @@ let initiate_payment = function (data, config, res) {
     return regexp.test(amt)
   }
 
-
   function checkArgumentValidation(data, config) {
 
     if (!data.name.trim()) {

@@ -1,0 +1,145 @@
+<%- include('./partials/head.ejs') %>
+<script
+        src="https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/easebuzz-checkout.js"></script> 
+<section class="section-padding services">
+  <div class="container">
+    <h2>Form</h2>
+    <form action="/pay/initiate_payment" method="POST"  enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="male" name="gender" value="male">
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="female" name="gender" value="female">
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">نام / Name
+          </label>
+        <input type="text" class="form-control" id="name">
+      </div>
+
+      <div class="form-group">
+        <label for="contact">رابطہ نمبر / Contact Number
+          </label>
+        <input type="number" class="form-control" name="phone" id="contact">
+      </div>
+
+      <div class="form-group">
+        <label for="email"> [اختیاری] ای میل ایڈریس/ E-Mail Address [optional]</label>
+        <input type="email" class="form-control" name="email" id="email">
+      </div>
+
+      <div class="form-group">
+        <label for="address">پتا / Address
+          </label>
+        <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="topic">Topics of Articles</label>
+        <select class="form-control">
+        <% var topics = [
+       ' Tawheed and the Companions/ توحیدِ الہی اور صحابہ '
+
+        , 'Love of Allah and the Companions/ عشقِ الہی اور صحابہ'
+        , 'The Greatness of Prophethood ﷺ and the Companions/ عظمتِ رسالت ﷺ اور صحابہ'
+        
+        , 'The love of the أهل البيت in the light of the Quran and Hadith/ مودتِ اہل بیت قرآن و حدیث کی روشنی میں'
+        
+        , 'The map of Islam in the era of Prophethood[ﷺ]  / دورِ رسالت ﷺ میں اسلام کا نقشہ'
+        
+        , 'Islam and the Saints of Allah and the objectives of their relationship/ اسلام اور اولیا اللہ اور اولیا سے تعلق کے مقاصد'
+        
+        , 'Introduction to the Scholars of Islam/ علماءِ اسلام کا تعارف'
+        
+        , 'The concept of Sufism in Islam/ اسلام میں پیری مریدی کا تصور'
+        
+        , 'The rights of the scholars on the Ummah/ امت پر علما کے حقوق'
+        
+        , 'Social responsibilities of scholars/ علما کی معاشرتی ذمہ داریاں'
+        
+        , 'Dars/e/Nizami and current affairs/ درسِ نظامی اور حالاتِ حاضرہ'
+        
+        , 'Modern students and the teachings of Islam/ ماڈرن طالبہ وطالبات اور تعلیماتِ اسلام'
+        
+        , 'Steps taken by scholars to prevent apostasy/ فتنہ ارتداد کے انسداد میں علما کے اقدامات'
+        
+        , 'Factors and causes of preaching in the public/ عوام میں تبلیغِ دین کے عوامل وأسباب'
+        
+        , 'Scholars and economy and economic conditions/ علما اور معاشیات و معاشی حالات'
+        
+        , 'Rights of Muslims on each other/ مسلمانوں کے ایک دوسرے پر حقوق'
+        
+        , 'Islam and modern science/ اسلام اور جدید سائنس'
+        
+        , 'Islam and Western civilization/ اسلام اور مغربی تہذیب'
+        
+        , 'Islam and economics/ اسلام اور معاشیات'
+        
+        , 'Islam and politics/ اسلام اور سیاست'
+        
+        , 'Islam and education/ اسلام اور تعلیم'
+        
+        , 'Islam and ethics/ اسلام اور اخلاقیات'
+        
+        , 'Islam and family/ اسلام اور خاندان'
+        
+        , 'Islam and environment/ اسلام اور ماحولیات'
+        
+        , 'Islam and fine arts/ اسلام اور فنون لطیفہ'
+        ]; 
+        
+       
+        for(var i = 0; i < topics.length; i++) { %>
+        
+          <option value="<%= topics[i] %>">
+            <%= topics[i] %>
+          </option>
+        
+        <% } %>
+
+      </select>
+      </div>
+     <!-- hidden fields -->
+      <input type="hidden" name="amount" value="">
+
+      <input type="hidden" name="transactionId" value="">
+
+      <input type="hidden" name="productinfo" value="">
+
+      <input type="hidden" name="furl" value="">
+
+      <input type="hidden" name="surl" value="">
+      
+      <input type="hidden" name="easepayid" value="">
+
+      <input type="hidden" name="payment_status" value="">
+
+      <input type="hidden" name="easepayid" value="">
+
+
+
+      <div class="form-group">
+        <label for="photo">فوٹو / Photo</label>
+        <input type="file" class="form-control-file" name="photo" id="photo" accept="image/*">
+      </div>
+      
+     
+      <div class="form-group" >
+        <label for="">Pay registration fees Rs.200: </label>
+        <button class="btn btn-primary"> <span> </span>Pay Rs.200</button>
+      </div>
+        <center>
+      <button type="submit" class="btn btn-primary" disabled>Submit</button>
+       </center>
+    </form>
+  </div>
+
+</section>
+
+<%- include('./partials/bottom.ejs') %>
