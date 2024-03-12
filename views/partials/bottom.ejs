@@ -218,20 +218,15 @@
         async function initiatePayment(e) {
           e.preventDefault();
          
-          // const formData = {
-          //   name: document.getElementById("name").value,
-          //   phone: document.getElementById("phone").value,
-          //   email: document.getElementById("email").value,
-          //   address: document.getElementById("address").value
-          // };
+         
             const data = { 
                 name: document.getElementById("name").value,
                 phone: document.getElementById("phone").value,
-                amount: '1.00',
+                amount: '200.00',
                 txnid: '1710170032671',
                 productinfo: 'suffa-essay-competetion',
-                surl: 'http://localhost:3000/pay/response',
-                furl: 'http://localhost:3000/pay/response',
+                surl: 'https://sawadeazam.org/pay/response',
+                furl: 'https://sawadeazam.org/pay/response',
                 email: document.getElementById("email").value,
                 address: document.getElementById("address").value,
                 udf1: '',
