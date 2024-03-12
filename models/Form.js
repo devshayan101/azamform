@@ -1,17 +1,24 @@
 const mongoose = require('mongoose');
 
 const participantSchema = new mongoose.Schema({
+
   name: {
     type: String,
-    required: true
+   required: [true, 'Name is required']
   },
   email: {
-    type: String,
-    
+    type: String,    
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
   },
   phone: {
     type: String,
-    required: true
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /^\d{10}$/.test(v);
+      },
+      message: 'Phone number must be 10 digits'
+    }
   },
   gender: {
     type: String,
@@ -20,7 +27,8 @@ const participantSchema = new mongoose.Schema({
   address: {
     type: String
   },
-  'article-topic': {
+
+  articletopic: {
     type: String
   },
   img: {
@@ -29,10 +37,18 @@ const participantSchema = new mongoose.Schema({
   },
   formSubmissionTime: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
+
+  payment: {
+    status: String,
+    amount: String,
+    txnid: String,
+    easepayid: String
+  }
+  
 });
 
-const Form = mongoose.model('Form', participantSchema);
+let Form = mongoose.model('form', participantSchema);
 
 module.exports = Form;

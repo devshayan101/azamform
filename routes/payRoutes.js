@@ -37,20 +37,29 @@ const config = {
     }
     if (checkReverseHash(req.body)) {
     
-    
-
-      res.json("status:",req.body.status);
+      // fill form with data from req.body
+      res.render('registration.ejs', { data: req.body });
+      // res.send(req.body);
 //    load form page filled with name , email, phone, etc with comming from req.body
-    }
-    res.send('false, check the hash value ');
+    }res.send('false, check the hash value ');
   });
   
   
   //initiate_payment API
   router.post('/initiate_payment', function (req, res) {
-    data = req.body;
+    const data = req.body;
+    console.log('data1',data);
     var initiate_payment = require('../Easebuzz/initiate_payment.js');
     initiate_payment.initiate_payment(data, config, res);
+  });
+
+  router.post('/test', function(req, res) {
+    data = req.body;
+    console.log('data2',data);
+    res.json({
+      'data': data
+    });
+  
   });
   
   //Transcation API  

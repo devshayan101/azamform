@@ -3,10 +3,23 @@
         src="https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/easebuzz-checkout.js"></script> 
 <section class="section-padding services">
   <div class="container">
+
     <h2>Form</h2>
-    <form action="/pay/initiate_payment" method="POST"  enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="gender">Gender</label>
+
+    <form method="POST" 
+    <% if(data.status === "success") { %>
+
+      action="/registraion-upload" 
+      enctype="multipart/form-data" >
+      
+    <% } else{ %>
+
+      action="/pay/initiate_payment" 
+      enctype="application/x-www-form-urlencoded" >
+
+    <% } %>
+  
+      <label for="gender">Gender</label>
         <div class="form-check">
           <input type="radio" class="form-check-input" id="male" name="gender" value="male">
           <label class="form-check-label" for="male">Male</label>
@@ -15,34 +28,55 @@
           <input type="radio" class="form-check-input" id="female" name="gender" value="female">
           <label class="form-check-label" for="female">Female</label>
         </div>
-      </div>
+      
 
+      
       <div class="form-group">
         <label for="name">نام / Name
           </label>
-        <input type="text" class="form-control" id="name">
+        <input type="text" class="form-control" id="first_name" name="name" required minlength="3" value=<%= data.firstname %> >
+        <div class="invalid-feedback">
+          Please enter a name with at least 3 characters.
+        </div>
       </div>
 
+
       <div class="form-group">
-        <label for="contact">رابطہ نمبر / Contact Number
+        <label for="contact">رابطہ نمبر / Contact Number [10 digit Indian Number]
           </label>
-        <input type="number" class="form-control" name="phone" id="contact">
+        <input type="tel" class="form-control" name="phone" id="phone" required pattern="\d{10}" value=<%= data.phone %> >
+        <div class="invalid-feedback">
+          Please enter a 10 digit phone number.
+        </div>
+
+        <input type="hidden" class="form-control" name="amount" id="amount" value="1.00">
+        <input type="hidden" id="txnid" class="txnid" name="txnid" >
+        <input type="hidden" id="productinfo" class="productinfo" name="productinfo" value="suffa-essay-competetion">
+        <input type="hidden" id="surl" class="surl" name="surl" value="http://localhost:3000/pay/response">
+        <input type="hidden" id="furl" class="furl" name="furl" value="http://localhost:3000/pay/response">
+
       </div>
 
       <div class="form-group">
-        <label for="email"> [اختیاری] ای میل ایڈریس/ E-Mail Address [optional]</label>
-        <input type="email" class="form-control" name="email" id="email">
+        <label for="email">  ای میل ایڈریس/ E-Mail Address </label>
+        <input type="email" class="form-control" name="email" id="email" value=<%= data.email %>>   
+        <div class="invalid-feedback">
+          Please enter a valid email address.
+        </div>
       </div>
 
       <div class="form-group">
         <label for="address">پتا / Address
           </label>
-        <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+        <textarea class="form-control" id="address" name="address" rows="2" minlength="10" required></textarea>
+        <div class="invalid-feedback">
+          Please enter an address with at least 10 characters.
+        </div>
       </div>
 
       <div class="form-group">
         <label for="topic">Topics of Articles</label>
-        <select class="form-control">
+        <select class="form-control" id="article-topic" name="article-topic">
         <% var topics = [
        ' Tawheed and the Companions/ توحیدِ الہی اور صحابہ '
 
@@ -105,41 +139,129 @@
 
       </select>
       </div>
-     <!-- hidden fields -->
-      <input type="hidden" name="amount" value="">
+       <!-- ------------------------------------------------------------------- -->
+        <div class="optional-data" hidden>
 
-      <input type="hidden" name="transactionId" value="">
+            <div class="form-field">
+                <label for="udf1">UDF1</label>
+                <input type="hidden" id="udf1" class="udf1" name="udf1" value="" placeholder="User description1">
+            </div>
+        
+            <div class="form-field">
+                <label for="udf2">UDF2</label>
+                <input type="hidden" id="udf2" class="udf2" name="udf2" value="" placeholder="User description2">
+            </div>
+    
+            <div class="form-field">
+                <label for="udf3">UDF3</label>
+                <input type="hidden" id="udf3" class="udf3" name="udf3" value="" placeholder="User description3">
+            </div>
+    
+            <div class="form-field">
+                <label for="udf4">UDF4</label>
+                <input type="hidden" id="udf4" class="udf4" name="udf4" value="" placeholder="User description4">
+            </div>
+    
+            <div class="form-field">
+                <label for="udf5">UDF5</label>
+                <input type="hidden" id="udf5" class="udf5" name="udf5" value="" placeholder="User description5">
+            </div>
+            <div class="form-field">
+                <label for="address1">Address 1</label>
+                <input id="address1" class="address1" name="address1" value="" placeholder="#250, Main 5th cross,">
+            </div>
+    
+            <div class="form-field">
+                <label for="address2">Address 2</label>
+                <input id="address2" class="address2" name="address2" value="" placeholder="Saket nagar, Pune">
+            </div>
+            
+            <div class="form-field">
+                <label for="city">City</label>
+                <input id="city" class="city" name="city" value="" placeholder="Pune">
+            </div>
+    
+            <div class="form-field">
+                <label for="state">State</label>
+                <input id="state" class="state" name="state" value="" placeholder="Maharashtra">
+            </div>
+    
+            <div class="form-field">
+                <label for="country">Country</label>
+                <input id="country" class="country" name="country" value="" placeholder="India">
+            </div>
+            
+            <div class="form-field">
+                <label for="zipcode">Zip-Code</label>
+                <input id="zipcode" class="zipcode" name="zipcode" value="" placeholder="123456">
+            </div>
 
-      <input type="hidden" name="productinfo" value="">
+                <div class="form-field">
+                <label for="sub_merchant_id">Sub-Merchant ID</label>
+                <input id="sub_merchant_id" class="sub_merchant_id" name="sub_merchant_id" value="" placeholder="123456">
+            </div>
 
-      <input type="hidden" name="furl" value="">
+              <div class="form-field">
+                <label for="unique_id">Unique Id</label>
+                <input id="unique_id" class="unique_id" name="unique_id" value="" placeholder="Customer unique Id">
+            </div>
 
-      <input type="hidden" name="surl" value="">
+              <div class="form-field">
+                <label for="split_payments">Split payment</label>
+                <input id="split_payments" class="split_payments" name="split_payments" value="" placeholder='{ "axisaccount" : 100, "hdfcaccount" : 100}'>
+            </div>
+            <div class="form-field">
+                <label for="customer_authentication_id">Customer Authentication ID</label>
+                <input id="customer_authentication_id" class="customer_authentication_id" name="customer_authentication_id" value="" placeholder='customer authentication number'>
+            </div>
+
+
+        </div>
+
+        <input id="udf6"  type='hidden' class="udf6" name="udf6" value="" placeholder="User description6">
+        <input id="udf7"  type='hidden' class="udf7" name="udf7" value="" placeholder="User description7">
+        <input id="udf8"  type='hidden' class="udf8" name="udf8" value="" placeholder="User description8">
+        <input id="udf9"  type='hidden' class="udf9" name="udf9" value="" placeholder="User description9">
+        <input id="udf10"  type='hidden' class="udf10" name="udf10" value="" placeholder="User description10">
+      <!-- --------------------------------------------------------------------- -->
+        
+
       
-      <input type="hidden" name="easepayid" value="">
+      
+      
+     <% if(data.status === "success"){ %>
 
-      <input type="hidden" name="payment_status" value="">
-
-      <input type="hidden" name="easepayid" value="">
-
-
+      <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        
+      </svg>
 
       <div class="form-group">
         <label for="photo">فوٹو / Photo</label>
-        <input type="file" class="form-control-file" name="photo" id="photo" accept="image/*">
+        <input type="file" class="form-control-file" name="photo" id="photo" accept="image/*" required>
       </div>
-      
-     
-      <div class="form-group" >
-        <label for="">Pay registration fees Rs.200: </label>
-        <button class="btn btn-primary"> <span> </span>Pay Rs.200</button>
+
+      <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>
+          Payment Successful
+        </div>
       </div>
+
+      <% } else { %>
+        <div class="form-group" >
+          <label for="">Pay registration fees Rs.200: </label>
+          <button class="btn btn-primary" onclick="initiatePayment()"> <span> </span>Pay Rs.200</button>
+        </div> 
+      <% } %>
         <center>
-      <button type="submit" class="btn btn-primary" disabled>Submit</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
        </center>
     </form>
   </div>
-
+</div>
 </section>
 
 <%- include('./partials/bottom.ejs') %>

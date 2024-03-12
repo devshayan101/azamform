@@ -10,11 +10,11 @@ let initiate_payment = function (data, config, res) {
   }
 
   function checkArgumentValidation(data, config) {
-
+    console.log("data", data)
     if (!data.name.trim()) {
       res.json({
         "status": 0,
-        "data": "Mandatory Parameter name can not empty"
+        "data": "Mandatory Parameter name can not empty"        
       });
     }
     if (!(data.amount.trim()) || !(isFloat(data.amount))) {
@@ -53,6 +53,7 @@ let initiate_payment = function (data, config, res) {
         "data": "Mandatory Parameter Surl/Furl cannot be empty"
       });
     }
+    
   }
 
   function geturl(env) {

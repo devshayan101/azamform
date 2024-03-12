@@ -18,6 +18,10 @@ body {
   backface-visibility: hidden;
   overflow-x: hidden;
 }
+.is-invalid {
+  border: 2px solid red;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.7); 
+}
 
 h1, h2, h3, h4 {
   font-weight: 700;
@@ -35,6 +39,9 @@ h1, h2, h3, h4 {
   color:#000 !important;
   font-size: x-large !important;
   /* text-decoration: none !important; */
+}
+.display-none{
+  display: none !important;
 }
 .collapse-bar-sub-section{
   font-size: larger;

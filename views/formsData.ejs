@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploading</title>
+</head>
+ 
+<body>
+    
+ 
+    <h1>Uploaded Images</h1>
+    <div>
+        <% items.forEach(function(form) { %>
+        <div>
+            <div>
+                <img src="data:image/<%=form.img.contentType%>;base64,
+                     <%=form.img.data.toString('base64')%>" width="100">
+                <div>
+                    <h5><%= form.name %></h5>                   
+                    <h5><%= form.phone %></h5>
+                    <h5><%= form.email %></h5>
+                   
+                    <h5><%= form.address %></h5>
+                    <h5>Object</h5>
+                <h5><%= form %></h5>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</body>
+ 
+</html>

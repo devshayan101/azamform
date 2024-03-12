@@ -5,10 +5,9 @@ const expressLayouts = require('express-ejs-layouts');
 var path = require("path");
 const multer = require('multer');
 const mongoose = require('mongoose')
-
+const fs = require('fs')
 const payRoutes = require('./routes/payRoutes')
-// const allRoutes = require('./routes/allRoutes')
-
+const Form = require('./models/Form.js')
 var app = express();
 app.set('view engine', 'ejs')
 
@@ -51,10 +50,10 @@ const upload = multer({
           return cb(new Error("Only .jpg .jpeg .png formats allowed"))
       }
   }
-  ,limits: { fileSize: maxFileSize }
+  //,limits: { fileSize: maxFileSize }
 });
 // Handle POST request for file upload
-app.post('/registraion-upload', upload.single('image'), (req, res) => {
+app.post('/registraion-upload', upload.single('photo'), (req, res) => {
   console.log('file',req.file);
   console.log('files:', req.files)
   
@@ -64,9 +63,9 @@ app.post('/registraion-upload', upload.single('image'), (req, res) => {
     email: req.body.email,
     address: req.body.address,
     gender: req.body.gender,
-
+    "article-topic": req.body.article-topic, 
     payment:{
-      status: req.body.payment_status,
+      status: req.body.status,
       amount: req.body.net_amount_debit,
       txnid: req.body.txnid,
       easepayid: req.body.easepayid
@@ -78,13 +77,13 @@ app.post('/registraion-upload', upload.single('image'), (req, res) => {
           contentType: req.file.mimetype
       }
   }
-  const newImage = new Image(obj);
+  const newForm = new Form(obj);
   
-  newImage.save()
-      .then(image => {
+  newForm.save()
+      .then(form => {
           res.status(200).json({
               message: 'Image uploaded successfully',
-              image
+              form
             });
       })
       .catch(err => {
@@ -94,24 +93,28 @@ app.post('/registraion-upload', upload.single('image'), (req, res) => {
 
   
 });
-app.get('/imageView', (req, res) => {
-  Image.find()
-  .then(images => {
-    res.render('index', { items: images });
+
+app.get('/forms-view', (req, res) => {
+  Form.find()
+  .then(forms => {
+    res.render('formsData', { items: forms });
   })
   .catch(err => console.error(err));
 });
 
+
 app.get('/', (req, res) => {  
   res.render('index.ejs')
 });
+
+
 
 app.get('/terms-and-privacy', (req, res) => {
   res.render('termsandprivacy.ejs')
 })
 
 app.get('/registration', (req, res) => {
-  res.render('registration.ejs');
+  res.render('registration.ejs', { data: '' });;
 })
 
 app.use('/pay', payRoutes);

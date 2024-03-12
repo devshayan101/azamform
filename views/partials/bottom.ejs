@@ -99,75 +99,176 @@
           }
         }
       </script>
+
       <script>
-        async function initiatePayment() {
+       function generatePhoneNumber() {
+        
+          const currentDate = new Date();
 
-          function getCurrentDateTimeNumbers() {
+          const phoneNumber = currentDate.getTime(); // Get current time in milliseconds
 
-            const now = new Date();
+          document.getElementById("txnid").value = phoneNumber;
+        }
 
-            let date = now.getDate();
-            if(date < 10) {
-              date = '0' + date;
-            }
+        window.onload = generatePhoneNumber;
+      
+      </script>
+      <script>
 
-            let hours = now.getHours();
-            if(hours < 10) {
-              hours = '0' + hours;
-            }
+                // Get form elements
+        const form = document.querySelector('form');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const addressInput = document.getElementById('address');
+        const emailInput = document.getElementById('email');
 
-            let minutes = now.getMinutes();
-            if(minutes < 10) {
-              minutes = '0' + minutes;
-            }
+        // Form submit event listener
+        form.addEventListener('submit', e => {
 
-            let seconds = now.getSeconds();
-            if(seconds < 10) {
-              seconds = '0' + seconds;
-            }
-
-            let milliseconds = now.getMilliseconds();
-            if(milliseconds < 100) {
-              milliseconds = '0' + milliseconds; 
-            }
-
-            return `${date}${hours}${minutes}${seconds}${milliseconds}`;
-
+          // Validate name
+          if(nameInput.value.trim().length < 3) {
+            e.preventDefault();
+            nameInput.classList.add('is-invalid');
           }
 
-          const transactionId = getCurrentDateTimeNumbers();
-          const amount = 200.00
-          const formData = new FormData();
+          // Validate phone
+          if(!/^\d{10}$/.test(phoneInput.value)) {  
+            e.preventDefault();
+            phoneInput.classList.add('is-invalid');
+          }
+
+          // Validate address
+          if(addressInput.value.trim().length < 10) {
+            e.preventDefault();
+            addressInput.classList.add('is-invalid');
+          }
+          
+          // Validate email
+          if(!/^\S+@\S+\.\S+$/.test(emailInput.value)) {
+            e.preventDefault();
+            emailInput.classList.add('is-invalid');
+          }
+
+        });
+
+        // Remove error on keyup
+        nameInput.addEventListener('keyup', () => {
+          nameInput.classList.remove('is-invalid');
+        })
+
+        // Similarly for other inputs
+        phoneInput.addEventListener('keyup', () => {
+          phoneInput.classList.remove('is-invalid'); 
+        })
+
+                // Add event listeners to inputs
+        nameInput.addEventListener('input', checkValidation);
+        phoneInput.addEventListener('input', checkValidation);
+        addressInput.addEventListener('input', checkValidation);
+        emailInput.addEventListener('input', checkValidation);
+
+        function checkValidation(e) {
+
+          // Get input that triggered event
+          const input = e.target;
+
+          // Remove existing errors
+          input.classList.remove('is-invalid');
+
+          switch(input.id) {
             
-          formData.append('name', form.name.value);
-          formData.append('email', form.email.value);
-          formData.append('phone', form.phone.value);
-          formData.append('amount', amount); 
-          formData.append('transactionId', transactionId);
-          formData.append('productinfo', 'suffa-essay-competetion');
-          formData.append('furl', '/pay/response');
-          formData.append('surl', '/pay/response');
+            case 'name': 
+              if(input.value.trim().length < 3) {
+                input.classList.add('is-invalid');
+              }
+              break;
 
+            case 'phone':
+              if(!/^\d{10}$/.test(input.value)) {
+                input.classList.add('is-invalid');
+              }  
+              break;
+            
+            case 'address':
+              if(input.value.trim().length < 10) {
+                input.classList.add('is-invalid');
+              }
+              break;
 
-          const response = await fetch('/pay/initiate_payment', {
-            method: 'POST', 
-            body: formData 
-          });
-
-          const data = await response.json();
-
-          if(data.status === 'success') {
-
-              document.querySelector('button[type="submit"]').disabled = false; 
-              
-              document.querySelector('input[name="easepayid"]').value = data.easepayId;
-
-              document.querySelector('input[name="payment_status"]').value = data.status;
-
-            //add other values like easepayid, etc.
-            }
-
+            case 'email':
+              if(!/^\S+@\S+\.\S+$/.test(input.value)) {
+                input.classList.add('is-invalid'); 
+              }
+              break;
           }
+
+        }
+
+
+      </script>
+
+      <script>
+        async function initiatePayment(e) {
+          e.preventDefault();
+         
+          // const formData = {
+          //   name: document.getElementById("name").value,
+          //   phone: document.getElementById("phone").value,
+          //   email: document.getElementById("email").value,
+          //   address: document.getElementById("address").value
+          // };
+            const data = { 
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                amount: '1.00',
+                txnid: '1710170032671',
+                productinfo: 'suffa-essay-competetion',
+                surl: 'http://localhost:3000/pay/response',
+                furl: 'http://localhost:3000/pay/response',
+                email: document.getElementById("email").value,
+                address: document.getElementById("address").value,
+                udf1: '',
+                udf2: '',
+                udf3: '',
+                udf4: '',
+                udf5: '',
+                address1: '',
+                address2: '',
+                city: '',
+                state: '',
+                country: '',
+                zipcode: '',
+                sub_merchant_id: '',
+                unique_id: '',
+                split_payments: '',
+                customer_authentication_id: '',
+                udf6: '',
+                udf7: '',
+                udf8: '',
+                udf9: '',
+                udf10: ''
+            };
+
+            axios.post("/pay/initiate_payment", data)
+            .then(response => {
+              console.log("Response from backend:", response.data);
+              // Optionally, handle response from backend
+              // For example, you can display a success message to the user
+              alert("Payment successful!");
+              // Submit the form after payment is successful
+              document.getElementById("paymentForm").action = "/pay/initiate_payment";
+              document.getElementById("paymentForm").enctype = "multipart/form-data";
+              // document.getElementById("submitButton").click();
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              // Handle errors, if any
+              // For example, you can display an error message to the user
+              alert("An error occurred. Please try again later.");
+            });
+
+      }
+            
       </script>
 
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -186,4 +287,3 @@
         
     </body>
   </html>
-  
