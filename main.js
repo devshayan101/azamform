@@ -63,10 +63,11 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
     email: req.body.email,
     address: req.body.address,
     gender: req.body.gender,
-    "article-topic": req.body.article-topic, 
+    "article-topic": req.body.topic,
+    "registration-number": req.body.registration, 
     payment:{
       status: req.body.status,
-      amount: req.body.net_amount_debit,
+      amount: req.body.amount,
       txnid: req.body.txnid,
       easepayid: req.body.easepayid
     },
@@ -81,10 +82,7 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
   
   newForm.save()
       .then(form => {
-          res.status(200).json({
-              message: 'Image uploaded successfully',
-              form
-            });
+          res.render("formSubmission.ejs")
       })
       .catch(err => {
           console.error(err);
@@ -94,7 +92,7 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
   
 });
 
-app.get('/forms-view', (req, res) => {
+app.get('/forms-view-aX4e3Fa5pJs*3%', (req, res) => {
   Form.find()
   .then(forms => {
     res.render('formsData', { items: forms });

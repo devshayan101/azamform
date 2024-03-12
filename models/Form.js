@@ -6,10 +6,12 @@ const participantSchema = new mongoose.Schema({
     type: String,
    required: [true, 'Name is required']
   },
+
   email: {
     type: String,    
     match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
   },
+
   phone: {
     type: String,
     required: true,
@@ -20,35 +22,66 @@ const participantSchema = new mongoose.Schema({
       message: 'Phone number must be 10 digits'
     }
   },
+
   gender: {
     type: String,
-    enum: ['male', 'female']
+    // enum: ['male', 'female']
   },
   address: {
-    type: String
+    type: String,
+    //match: /^[a-zA-Z0-9,]*$/,
+    not: [ // add this
+    /[{}\[\]();:!#&^%]/ // regex to disallow these chars
+  ]
   },
 
-  articletopic: {
-    type: String
+  'registration-number':{
+    type: String,    
+    match: /^[0-9]*$/
   },
+
+  'article-topic': {
+    type: String,
+    not: [ // add this
+    /[{}\[\]();:!#&^%]/ // regex to disallow these chars
+  ]
+  },
+
   img: {
     data: Buffer,
     contentType: String,
   },
-  formSubmissionTime: {
-    type: Date,
-    default: Date.now
-  },
-
-  payment: {
-    status: String,
-    amount: String,
-    txnid: String,
-    easepayid: String
-  }
   
+  payment: {
+    status:  {
+      type: String,
+     
+    },
+    amount: {
+      type: Number, 
+      required: true,
+      not: [ // add this
+      /[{}\[\]();:!#&^%]/ // regex to disallow these chars
+    ]
+    },
+    txnid: {
+      type: String,
+      required: true,
+      maxlength: 20,
+      not: [ // add this
+      /[{}\[\]();:!#&^%]/ // regex to disallow these chars
+    ]
+    },
+    easepayid: {
+      type: String, 
+      required: true,
+      not: [ // add this
+      /[{}\[\]();:!#&^%]/ // regex to disallow these chars
+    ]
+    }
+  }
 });
 
 let Form = mongoose.model('form', participantSchema);
 
-module.exports = Form;
+module.exports = Form
