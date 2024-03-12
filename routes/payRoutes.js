@@ -53,15 +53,7 @@ const config = {
     initiate_payment.initiate_payment(data, config, res);
   });
 
-  router.post('/test', function(req, res) {
-    data = req.body;
-    console.log('data2',data);
-    res.json({
-      'data': data
-    });
-  
-  });
-  
+
   //Transcation API  
   router.post('/transaction', function (req, res) {
     data = req.body;

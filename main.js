@@ -82,7 +82,7 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
   
   newForm.save()
       .then(form => {
-          fs.unlinkSync(img.data); //delete uploaded image file from system storage.
+          fs.unlinkSync(path.join(__dirname + '/public/uploads/'+ req.file.filename)); //delete uploaded image file from system storage.
           res.render("formSubmission.ejs")
       })
       .catch(err => {
