@@ -3,7 +3,6 @@
         src="https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/easebuzz-checkout.js"></script> 
 <section class="section-padding services">
   <div class="container">
-
     <h2>Form</h2>
 
     <form method="POST" 
@@ -49,12 +48,12 @@
           Please enter a 10 digit phone number.
         </div>
 
-        <input type="hidden" class="form-control" name="amount" id="amount" value="1.00">
+        <input type="hidden" class="form-control" name="amount" id="amount" value="200.00">
         <input type="hidden" id="txnid" class="txnid" name="txnid" >
         <input type="hidden" id="registration" class="txnid" name="registration" >
         <input type="hidden" id="productinfo" class="productinfo" name="productinfo" value="suffa-essay-competetion">
-        <input type="hidden" id="surl" class="surl" name="surl" value="http://localhost:3000/pay/response">
-        <input type="hidden" id="furl" class="furl" name="furl" value="http://localhost:3000/pay/response">
+        <input type="hidden" id="surl" class="surl" name="surl" value="http://sawadeazam.org/pay/response">
+        <input type="hidden" id="furl" class="furl" name="furl" value="http://sawadeazam.org/pay/response">
         <input type="hidden" name="easepayid" id="easepayid" value="<%= data.easepayid %>">
      
       </div>
@@ -247,13 +246,19 @@
       </div>
 
       <% } else { %>
-        <div class="form-group" >
-          <label for="">Pay registration fees Rs.200: </label>
-          <button class="btn btn-primary" onclick="initiatePayment()"> <span> </span>Pay Rs.200</button>
+        <div class="form-group pay-group" >
+          <label for="" class="pay-label">Pay registration fees Rs.200: </label>
+          <button class="btn btn-dark pay-button" onclick="initiatePayment()"> <span> </span>Pay Rs.200</button>
         </div> 
       <% } %>
         <center>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" 
+      <% if(data.status === "success"){ %>
+      
+        <%}else{%>
+          disabled
+          <%}%>
+      >Submit</button>
        </center>
     </form>
   </div>
