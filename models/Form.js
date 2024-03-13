@@ -27,6 +27,10 @@ const participantSchema = new mongoose.Schema({
     type: String,
     // enum: ['male', 'female']
   },
+  qualification: {
+    type: String,
+    // enum: ['student', 'completedEducation']
+  },
   address: {
     type: String,
     //match: /^[a-zA-Z0-9,]*$/,

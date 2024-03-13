@@ -3,8 +3,15 @@
         src="https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/easebuzz-checkout.js"></script> 
 <section class="section-padding services">
   <div class="container">
-    <h2>Form</h2>
-
+    <h2>صُفّہ آنلائن مقالہ نگاری مقابلہ: رجسٹریشن فارم <br>Suffa Online Essay Competition: Registration Form</h2>
+     <p> <b>اہتمام: 
+      
+      بزم اصحاب صفہ، مجلس محمدی، سوادِ اعظم انٹرنیشنل کونسل آف انڈینز، قاضى پور، شاہجہانپور، اتر پردیش ، ہند
+      <br>Organised by: Bazme As'haabe Suffa of Majlise Muhammadi, Sawade Azam, Qazipur, Shahjahanpur, UP, India. <br>
+    </b>
+    </p>
+<hr>
+<br>
     <form method="POST" 
     <% if(data.status === "success") { %>
 
@@ -17,7 +24,9 @@
       enctype="application/x-www-form-urlencoded" >
 
     <% } %>
-      <div class="form-group">
+    <div class="row">
+
+      <div class="form-group col" style="margin:auto ;">
         <label for="gender">صنف / Gender
         </label>
         <div class="form-check">
@@ -31,22 +40,25 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group col" style="margin:auto ;">
         <label for="gender">تعلیم / Qualification
         </label>
         <div class="form-check">
-          <input type="radio" class="form-check-input" id="male" name="gender" value="male">
-          <label class="form-check-label" for="male">Student/طالب علم ہیں۔
+          <input type="radio" class="form-check-input" id="student" name="qualification" value="student">
+          <label class="form-check-label" for="student">Student/طالب علم ہیں۔
           </label>
         </div>
-        
+
         <div class="form-check">
-          <input type="radio" class="form-check-input" id="female" name="gender" value="female">
-          <label class="form-check-label" for="female">Completed education/تعلیم مکمل ہو چکی۔
+          <input type="radio" class="form-check-input" id="completedEducation" name="qualification" value="completedEducation">
+          <label class="form-check-label" for="completedEducation">Completed education/تعلیم مکمل ہو چکی۔
           </label>
         </div>
       </div>
+      
+    </div>
 
+    <br>
       <div class="form-group">
         <label for="name">نام / Name
           </label>
@@ -55,12 +67,11 @@
           Please enter a name with at least 3 characters.
         </div>
       </div>
-
-
+    
       <div class="form-group">
         <label for="contact">رابطہ نمبر / Contact Number [10 digit Indian Number]
           </label>
-        <input type="tel" class="form-control" name="phone" id="phone" required pattern="\d{10}" value=<%= data.phone %> >
+        <input type="tel" class="form-control" name="phone" id="phone" required pattern="\d{10}" placeholder="9123456789" value=<%= data.phone %> >
         <div class="invalid-feedback">
           Please enter a 10 digit phone number.
         </div>
@@ -77,7 +88,7 @@
 
       <div class="form-group">
         <label for="email">  ای میل ایڈریس/ E-Mail Address </label>
-        <input type="email" class="form-control" name="email" id="email" value=<%= data.email %>>   
+        <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value=<%= data.email %>>   
         <div class="invalid-feedback">
           Please enter a valid email address.
         </div>
@@ -86,7 +97,7 @@
       <div class="form-group">
         <label for="address">پتا / Address
           </label>
-        <textarea class="form-control" id="address" name="address" rows="2" minlength="10" required></textarea>
+        <textarea class="form-control" id="address" name="address" rows="2" minlength="10" placeholder="village / city , district, state" required></textarea>
         <div class="invalid-feedback">
           Please enter an address with at least 10 characters.
         </div>
@@ -263,13 +274,19 @@
       </div>
 
       <% } else { %>
-        <div class="form-group pay-group" >
-          <label for="" class="pay-label">Pay registration fees Rs.200: </label>
-          <button class="btn btn-dark pay-button" onclick="initiatePayment()"> <span> </span>Pay Rs.200</button>
-        </div> 
-      <% } %>
+        <br>
         <center>
-      <button type="submit" class="btn btn-primary" 
+        <div class="form-group row" >
+          <label for="" class="col">Pay registration fees Rs.200: </label>
+          <div class="col">
+          <button class="btn btn-secondary" onclick="initiatePayment()"> <span> </span>Pay Rs.200</button>
+          </div>
+        </div> 
+      </center>
+      <% } %>
+      <hr>
+        <center class="">
+      <button type="submit" class="btn btn-primary btn-lg" 
       <% if(data.status === "success"){ %>
       
         <%}else{%>

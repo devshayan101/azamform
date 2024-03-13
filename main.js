@@ -63,6 +63,7 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
     email: req.body.email,
     address: req.body.address,
     gender: req.body.gender,
+    qualification: req.body.qualification,
     "article-topic": req.body.topic,
     "registration-number": req.body.registration, 
     payment:{
