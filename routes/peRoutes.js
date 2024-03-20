@@ -7,16 +7,28 @@ const SHA256 = require('crypto-js/sha256');
 let app = express();
 app.use(express.urlencoded({ extended: true }));
 
+function generateUniqueId(length) {
+	let id = '';
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	for (let i = 0; i < length; i++) {
+		id += characters.charAt(Math.floor(Math.random() * characters.length));
+	}
+
+	return id + Date.now();
+}
+
+const uniqueIdCustom = generateUniqueId(5);
+
 const config = {
 	hostUrl: process.env.PHONEPE_URL || 'https://api-preprod.phonepe.com/apis/pg-sandbox',
 	merchantId: process.env.MERCHANT_ID || 'PGTESTPAYUAT',
 	saltKey: process.env.SALT_KEY || '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399',
 	saltIndex: process.env.SALT_INDEX || '1',
-	apiEndPoint: process.env.apiEndPoint || '/pg/v1/pay',
+	apiEndPoint: process.env.API_END_POINT || '/pg/v1/pay',
 	merchantTransactionId: uniqid(),
-	merchantUserId: 'MUID123',
+	merchantUserId: uniqueIdCustom,
 };
-
+console.log(config);
 router.get('/', (req, res) => {
 	res.render('pePaymentForm.ejs');
 });
@@ -40,7 +52,7 @@ router.post('/pay', (req, res) => {
 		merchantTransactionId: config.merchantTransactionId,
 		merchantUserId: config.merchantUserId,
 		amount: 100 * req.body.amount, //take input from form //validate input
-		redirectUrl: `http://localhost:3000/pe/redirect-url/${config.merchantTransactionId}`,
+		redirectUrl: `https://sawadeazam.org/pe/redirect-url/${config.merchantTransactionId}`,
 		redirectMode: 'REDIRECT',
 		mobileNumber: req.body.phone, //take input from form //validate input
 		paymentInstrument: {
