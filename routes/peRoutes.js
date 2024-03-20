@@ -14,8 +14,9 @@ const config = {
 	saltIndex: process.env.SALT_INDEX || '1',
 	apiEndPoint: process.env.API_END_POINT || '/pg/v1/pay',
 	merchantTransactionId: uniqid(),
-	merchantUserId: 'mui1234',
+	merchantUserId: uniqid(),
 };
+const agent = new http.Agent({ keepAlive: true });
 
 router.get('/', (req, res) => {
 	res.render('pePaymentForm.ejs');
@@ -49,13 +50,13 @@ router.post('/pay', (req, res) => {
 	};
 
 	console.log(payload);
-	const payloadBuffer = Buffer.from(JSON.stringify(payload), 'utf-8');
+	const payloadBuffer = Buffer.from(JSON.stringify(payload));
 	const base64EncodedPayload = payloadBuffer.toString('base64');
 	console.log('base64EncodedPayload:', base64EncodedPayload);
 
 	const xVerify = SHA256(base64EncodedPayload + config.apiEndPoint + config.saltKey) + '###' + config.saltIndex;
-	console.log('xVerify:', xVerify);
 
+	console.log('xVerify:', xVerify);
 	const options = {
 		method: 'post',
 		url: `https://api.phonepe.com/apis/hermes/pg/v1/pay`,
@@ -67,6 +68,7 @@ router.post('/pay', (req, res) => {
 		data: {
 			request: base64EncodedPayload,
 		},
+		httpAgent: agent,
 	};
 	axios
 		.request(options)
@@ -75,7 +77,7 @@ router.post('/pay', (req, res) => {
 			if (response.data.success === true) {
 				console.log(response.data.data.instrumentResponse.redirectInfo.url);
 				const url = response.data.data.instrumentResponse.redirectInfo.url;
-				return res.redirect(url);
+				return res.redirect(303, url);
 			} else return res.send(response.data);
 		})
 		.catch(function (error) {
