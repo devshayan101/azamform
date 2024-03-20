@@ -75,15 +75,15 @@ router.post('/pay', (req, res) => {
 			if (response.data.success === true) {
 				console.log(response.data.data.instrumentResponse.redirectInfo.url);
 				const url = response.data.data.instrumentResponse.redirectInfo.url;
-				res.redirect(url);
-			} else res.send(response.data);
+				return res.redirect(url);
+			} else return res.send(response.data);
 		})
 		.catch(function (error) {
 			console.error(error.message);
 			console.log(error.response.headers);
 			console.log(error.response.status);
 			console.log(error.response.statusText);
-			res.send(error.message);
+			return res.send(error.message);
 		});
 });
 
@@ -112,15 +112,15 @@ router.get('/redirect-url/:merchantTransactionId', (req, res) => {
 			console.log(response.data);
 			if (response.data.code === 'PAYMENT_SUCCESS') {
 				//handle payment success
-				res.render('pePaymentSuccess.ejs', { data: response.data });
+				return res.render('pePaymentSuccess.ejs', { data: response.data });
 			} else res.send(error, 'Error'); //check payment status with response.data.code and handle data.
 		})
 		.catch(function (error) {
 			console.error(error.message);
-			res.send(error.message);
 			console.log(error.response.headers);
 			console.log(error.response.status);
 			console.log(error.response.statusText);
+			return res.send(error.message);
 		});
 });
 
