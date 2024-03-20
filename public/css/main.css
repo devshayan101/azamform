@@ -726,6 +726,7 @@ iframe {
   background-color: #28a745;
   color: white;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
 }
 @media screen and (max-width: 768px) {
   .navbar-header {

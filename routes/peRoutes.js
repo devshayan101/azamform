@@ -7,18 +7,6 @@ const SHA256 = require('crypto-js/sha256');
 let app = express();
 app.use(express.urlencoded({ extended: true }));
 
-function generateUniqueId(length) {
-	let id = '';
-	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	for (let i = 0; i < length; i++) {
-		id += characters.charAt(Math.floor(Math.random() * characters.length));
-	}
-
-	return id + Date.now();
-}
-
-const uniqueIdCustom = generateUniqueId(5);
-
 const config = {
 	hostUrl: process.env.PHONEPE_URL || 'https://api-preprod.phonepe.com/apis/pg-sandbox',
 	merchantId: process.env.MERCHANT_ID || 'PGTESTPAYUAT',
@@ -26,8 +14,9 @@ const config = {
 	saltIndex: process.env.SALT_INDEX || '1',
 	apiEndPoint: process.env.API_END_POINT || '/pg/v1/pay',
 	merchantTransactionId: uniqid(),
-	merchantUserId: uniqueIdCustom,
+	merchantUserId: uniqid(),
 };
+
 console.log(config);
 router.get('/', (req, res) => {
 	res.render('pePaymentForm.ejs');
@@ -64,8 +53,7 @@ router.post('/pay', (req, res) => {
 	const payloadBuffer = Buffer.from(JSON.stringify(payload), 'utf-8');
 	const base64EncodedPayload = payloadBuffer.toString('base64');
 	console.log('base64EncodedPayload:', base64EncodedPayload);
-	//   (Base64 encoded payload + “/pg/v1/pay” + salt key
-	// SHA256(Base64 encoded payload + “/pg/v1/pay” + salt key) + ### + salt index
+
 	const xVerify = SHA256(base64EncodedPayload + config.apiEndPoint + config.saltKey) + '###' + config.saltIndex;
 	console.log('xVerify:', xVerify);
 
