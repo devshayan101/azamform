@@ -7,6 +7,7 @@ const multer = require('multer');
 const mongoose = require('mongoose')
 const fs = require('fs')
 const payRoutes = require('./routes/payRoutes')
+const peRoutes = require('./routes/peRoutes')
 const Form = require('./models/Form.js')
 var app = express();
 app.set('view engine', 'ejs')
@@ -20,10 +21,10 @@ app.use(express.json());
 app.use(express.static('./public'));
 
 const port = process.env.PORT || 3000;
-// app.listen(port, () => console.log(`Server started on port ${port}`))
-mongoose.connect(process.env.MONGO_URI)
-    .then(result => app.listen(port, () => console.log(`Server started on port ${port}`)))
-    .catch(err => console.log(`db connection`, err))
+app.listen(port, () => console.log(`Server started on port ${port}`))
+// mongoose.connect(process.env.MONGO_URI)
+    // .then(result => app.listen(port, () => console.log(`Server started on port ${port}`)))
+    // .catch(err => console.log(`db connection`, err))
 
 //Routes
 // app.use('/', allRoutes);
@@ -93,7 +94,7 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
 
   
 });
-
+//view forms
 app.get('/forms-view-aX4e3Fa5pJs*3%', (req, res) => {
   Form.find()
   .then(forms => {
@@ -116,8 +117,8 @@ app.get('/terms-and-privacy', (req, res) => {
 app.get('/registration', (req, res) => {
   res.render('registration.ejs', { data: '' });;
 })
-
-app.use('/pay', payRoutes);
+app.use('/pe', peRoutes); //phonepe payment routes
+// app.use('/pay', payRoutes);
 
 //404 
 app.use((req, res) => {

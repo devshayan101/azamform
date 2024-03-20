@@ -128,6 +128,7 @@
         const phoneInput = document.getElementById('phone');
         const addressInput = document.getElementById('address');
         const emailInput = document.getElementById('email');
+        const amountInput = document.getElementById('amount');
 
         // Form submit event listener
         form.addEventListener('submit', e => {
@@ -155,7 +156,11 @@
             e.preventDefault();
             emailInput.classList.add('is-invalid');
           }
-
+          //Validate amount less than Rs.7000
+          if(!/^\d{1,4}(\.\d{1,2})?$/.test(amountInput.value)) {
+            e.preventDefault();
+            amountInput.classList.add('is-invalid');
+          }
         });
 
         // Remove error on keyup
@@ -173,6 +178,7 @@
         phoneInput.addEventListener('input', checkValidation);
         addressInput.addEventListener('input', checkValidation);
         emailInput.addEventListener('input', checkValidation);
+        amountInput.addEventListener('input', checkValidation);
 
         function checkValidation(e) {
 
@@ -207,6 +213,11 @@
                 input.classList.add('is-invalid'); 
               }
               break;
+            case 'amount':
+            if(!/^\d{1,4}(\.\d{1,2})?$/.test(input.value)) {
+              input.classList.add('is-invalid'); 
+            }
+            break;
           }
 
         }

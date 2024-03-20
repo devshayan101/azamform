@@ -522,10 +522,7 @@ iframe {
   top: 0px;
 }
 
-.top-nav-collapse .navbar-brand img {
-  /* width: 65%; */
-  
-}
+
 
 .top-nav-collapse .navbar-nav .nav-link {
   color: #333 !important;
@@ -711,6 +708,14 @@ iframe {
 
 .slicknav_menu {
   display: none;
+}
+.mobile-nav-header {
+  display: flex;
+  align-items: center; 
+}
+
+.mobile-nav-header .btn {
+  margin-left: 10px; 
 }
 
 @media screen and (max-width: 768px) {

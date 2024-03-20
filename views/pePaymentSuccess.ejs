@@ -1,0 +1,28 @@
+<%- include('./partials/head.ejs') %>
+
+<section class="section-padding services">
+	<div class="container">
+		<div class="alert alert-success" role="alert">
+			<center>
+				<h1 class="alert-heading"><%= data.message %></h1>
+				<hr />
+				<h4>
+					Your payment is successfully registered at Sawad-E-Aazam. <br />
+					<hr />
+					Transaction Details: <br /><br />
+				</h4>
+				<h5>
+					<b>Amount: Rs.</b> <%= data.data.amount/100 %> <br /><br />
+					<b>Merchant Transaction Id:</b> <%= data.data.merchantTransactionId %> <br /><br />
+					<b>Transaction Id:</b> <%= data.data.transactionId %> <br /><br />
+					<b>PG-Transaction Id:</b> <%= data.data.paymentInstrument.pgTransactionId %> <br />
+				</h5>
+			</center>
+			<br />
+			<hr />
+			<p>Note: Save the details for future references</p>
+		</div>
+	</div>
+</section>
+
+<%- include('./partials/bottom.ejs') %>

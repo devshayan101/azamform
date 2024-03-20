@@ -1,0 +1,50 @@
+<%- include('./partials/head.ejs') %>
+
+<section class="section-padding services">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<div class="card">
+					<div class="card-body">
+						<form method="POST" action="/pe/pay" enctype="application/x-www-form-urlencoded">
+							<div class="form-group">
+								<label for="phone">Phone Number</label>
+								<input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required pattern="\d{10}" />
+							</div>
+
+							<div class="form-group">
+								<label for="amount">Amount</label>
+								<input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount less than Rs.10,000" required pattern="\d{4}" />
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-block">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- <script>
+	// Add validation on submit
+	document.querySelector('form').addEventListener('submit', (e) => {
+		// Get input values
+		const phone = document.querySelector('#phone').value;
+		const amount = document.querySelector('#amount').value;
+
+		// Phone validation
+		if (!phone.match(/\d{10}/)) {
+			e.preventDefault();
+			alert('Please enter a valid 10 digit phone number');
+		}
+
+		// Amount validation
+		if (amount < 1 || amount > 9999) {
+			e.preventDefault();
+			alert('Please enter amount between 1 and 9999');
+		}
+	});
+</script> -->
+
+<%- include('./partials/bottom.ejs') %>
