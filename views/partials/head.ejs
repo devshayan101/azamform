@@ -77,7 +77,7 @@
 							<span class="navbar-toggler-icon"></span>
 						</button>
 
-						<button class="btn-custom btn-success">Imdad</button>
+						<button class="btn-custom" id="imdadBtn">IMDAD</button>
 					</div>
 					<ul class="onepage-nev mobile-menu">
 						<li>
@@ -112,5 +112,12 @@
 			</nav>
 			<!-- Navbar End -->
 		</header>
+		<script>
+			const imdadBtn = document.getElementById('imdadBtn');
+
+			imdadBtn.addEventListener('click', () => {
+				window.location.href = '/pe/';
+			});
+		</script>
 	</body>
 </html>
