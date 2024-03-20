@@ -14,10 +14,9 @@ const config = {
 	saltIndex: process.env.SALT_INDEX || '1',
 	apiEndPoint: process.env.API_END_POINT || '/pg/v1/pay',
 	merchantTransactionId: uniqid(),
-	merchantUserId: uniqid(),
+	merchantUserId: 'mui1234',
 };
 
-console.log(config);
 router.get('/', (req, res) => {
 	res.render('pePaymentForm.ejs');
 });
@@ -59,7 +58,7 @@ router.post('/pay', (req, res) => {
 
 	const options = {
 		method: 'post',
-		url: `${config.hostUrl}${config.apiEndPoint}`,
+		url: `https://api.phonepe.com/apis/hermes/pg/v1/pay`,
 		headers: {
 			accept: 'application/json',
 			'Content-Type': 'application/json',
@@ -114,7 +113,7 @@ router.get('/redirect-url/:merchantTransactionId', (req, res) => {
 			if (response.data.code === 'PAYMENT_SUCCESS') {
 				//handle payment success
 				res.render('pePaymentSuccess.ejs', { data: response.data });
-			} else res.send(error, 'Error');
+			} else res.send(error, 'Error'); //check payment status with response.data.code and handle data.
 		})
 		.catch(function (error) {
 			console.error(error.message);
