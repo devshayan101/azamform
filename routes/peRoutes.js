@@ -5,6 +5,7 @@ const axios = require('axios');
 const uniqid = require('uniqid');
 const SHA256 = require('crypto-js/sha256');
 const CryptoJS = require('crypto-js');
+const store = require('store');
 const http = require('http');
 const crypto = require('crypto');
 let app = express();
@@ -14,16 +15,18 @@ app.use(express.urlencoded({ extended: true }));
 
 // const timeString = now.toString();
 
-const randomBytes = CryptoJS.lib.WordArray.random(8);
-const hexString = randomBytes.toString(CryptoJS.enc.Hex);
+// const randomBytes = CryptoJS.lib.WordArray.random(8);
+// const hexString = randomBytes.toString(CryptoJS.enc.Hex);
 
+let tx_uuid = uniqid();
+store.set('uuid', { tx: tx_uuid });
 const config = {
 	hostUrl: process.env.PHONEPE_URL, //|| 'https://api-preprod.phonepe.com/apis/pg-sandbox',
 	merchantId: process.env.MERCHANT_ID || 'PGTESTPAYUAT',
 	saltKey: process.env.SALT_KEY || '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399',
 	saltIndex: process.env.SALT_INDEX || '1',
 	apiEndPoint: process.env.API_END_POINT || '/pg/v1/pay',
-	merchantTransactionId: hexString,
+	merchantTransactionId: tx_uuid,
 	merchantUserId: uniqid(),
 };
 // const agent = new http.Agent({ keepAlive: true });
@@ -48,7 +51,7 @@ router.post('/pay', (req, res) => {
 
 	const payload = {
 		merchantId: config.merchantId,
-		merchantTransactionId: config.merchantTransactionId,
+		merchantTransactionId: req.body.txnid,
 		merchantUserId: req.body.phone,
 		amount: 100 * req.body.amount, //take input from form //validate input
 		redirectUrl: `https://sawadeazam.org/pe/redirect-url/${config.merchantTransactionId}`,
