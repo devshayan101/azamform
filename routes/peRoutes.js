@@ -60,7 +60,7 @@ router.post('/pay', (req, res) => {
 	console.log('xVerify:', xVerify);
 	const options = {
 		method: 'post',
-		url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay`,
+		url: `${config.hostUrl}/pg/v1/pay`,
 		headers: {
 			accept: 'application/json',
 			'Content-Type': 'application/json',
