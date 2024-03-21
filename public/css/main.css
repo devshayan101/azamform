@@ -733,7 +733,7 @@ iframe {
   padding: 10px 20px;
   border-radius: 5px;
   color: white;
-  background: #4285F4;
+  /* background: #4285F4; */
   box-shadow: 0 0 0 0 rgba(66, 244, 176, 0.5);
   animation: animate-shadow 2s infinite;
 }
@@ -747,6 +747,28 @@ iframe {
   }
   100% {
     box-shadow: 0 0 0 0 rgba(66,244, 176, 0.5);
+  }
+}
+
+.animated-shadow-hero {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  /* background: #4285F4; */
+  box-shadow: 0 0 0 0 rgba(243, 223, 3, 0.657);
+  animation: animate-shadow 2s infinite;
+}
+
+@keyframes animate-shadow-hero {
+  0% {
+    box-shadow: 0 0 0 0 rgba(243, 223, 3, 0.657);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(243, 223, 3, 0.657);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 223, 3, 0.657);
   }
 }
 @media screen and (max-width: 768px) {
