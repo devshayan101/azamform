@@ -137,7 +137,7 @@ router.post('/pay', (req, res) => {
 });
 
 //transaction status check
-router.get('/redirect-url/:merchantTransactionId', (req, res) => {
+router.post('/redirect-url/:merchantTransactionId', (req, res) => {
 	const { merchantTransactionId } = req.params;
 	console.log('merchantTransactionId:', merchantTransactionId);
 	console.log('merchantId:', config.merchantId);
@@ -166,9 +166,7 @@ router.get('/redirect-url/:merchantTransactionId', (req, res) => {
 		})
 		.catch(function (error) {
 			console.error(error.message);
-			console.log(error.response.headers);
-			console.log(error.response.status);
-			console.log(error.response.statusText);
+
 			return res.send(error.message);
 		});
 });
