@@ -728,6 +728,27 @@ iframe {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }
+.animated-shadow {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  background: #4285F4;
+  box-shadow: 0 0 0 0 rgba(66, 244, 176, 0.5);
+  animation: animate-shadow 2s infinite;
+}
+
+@keyframes animate-shadow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(66,244, 176, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(66,244, 176, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(66,244, 176, 0.5);
+  }
+}
 @media screen and (max-width: 768px) {
   .navbar-header {
     width: 100%;
