@@ -137,7 +137,7 @@ router.post('/pay', (req, res) => {
 });
 
 //transaction status check
-router.post('/redirect-url/:merchantTransactionId', (req, res) => {
+router.get('/redirect-url/:merchantTransactionId', (req, res) => {
 	const { merchantTransactionId } = req.params;
 	console.log('merchantTransactionId:', merchantTransactionId);
 	console.log('merchantId:', config.merchantId);
@@ -162,7 +162,9 @@ router.post('/redirect-url/:merchantTransactionId', (req, res) => {
 			if (response.data.code === 'PAYMENT_SUCCESS') {
 				//handle payment success
 				return res.render('pePaymentSuccess.ejs', { data: response.data });
-			} else res.send(error, 'Error'); //check payment status with response.data.code and handle data.
+			} else {
+				throw new Error('Payment Failed');
+			}
 		})
 		.catch(function (error) {
 			console.error(error.message);
