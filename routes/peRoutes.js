@@ -4,6 +4,7 @@ require('dotenv').config();
 const axios = require('axios');
 const uniqid = require('uniqid');
 const SHA256 = require('crypto-js/sha256');
+const http = require('http');
 let app = express();
 app.use(express.urlencoded({ extended: true }));
 
@@ -59,7 +60,7 @@ router.post('/pay', (req, res) => {
 	console.log('xVerify:', xVerify);
 	const options = {
 		method: 'post',
-		url: `https://api.phonepe.com/apis/hermes/pg/v1/pay`,
+		url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay`,
 		headers: {
 			accept: 'application/json',
 			'Content-Type': 'application/json',
@@ -68,8 +69,15 @@ router.post('/pay', (req, res) => {
 		data: {
 			request: base64EncodedPayload,
 		},
-		httpAgent: agent,
+		// httpAgent: agent,
+		// transformRequest: [
+		// 	(data, headers) => {
+		// 		delete headers.common.Expect;
+		// 		return data;
+		// 	},
+		// ],
 	};
+	// delete axios.defaults.headers['Expect'];
 	axios
 		.request(options)
 		.then(function (response) {
@@ -82,7 +90,6 @@ router.post('/pay', (req, res) => {
 		})
 		.catch(function (error) {
 			console.error(error.message);
-			console.log(error.response.headers);
 			console.log(error.response.status);
 			console.log(error.response.statusText);
 			return res.send(error.message);
