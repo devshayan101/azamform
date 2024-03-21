@@ -48,13 +48,15 @@ router.post('/pay', (req, res) => {
 	if (!phoneRegex.test(req.body.phone)) {
 		return res.status(400).send('Invalid phone number');
 	}
+	//validate txnid
+	console.log(req.body.txnid);
 
 	const payload = {
 		merchantId: config.merchantId,
 		merchantTransactionId: req.body.txnid,
 		merchantUserId: req.body.phone,
 		amount: 100 * req.body.amount, //take input from form //validate input
-		redirectUrl: `https://sawadeazam.org/pe/redirect-url/${config.merchantTransactionId}`,
+		redirectUrl: `https://sawadeazam.org/pe/redirect-url/${req.body.txnid}`,
 		redirectMode: 'REDIRECT',
 		mobileNumber: req.body.phone, //take input from form //validate input
 		paymentInstrument: {
