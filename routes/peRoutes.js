@@ -53,7 +53,7 @@ router.post('/pay', (req, res) => {
 	}
 	console.log(req.body.txnid);
 
-	const formTypeRegex = /^\w{9}$/;
+	const formTypeRegex = /^\w{5,9}$/;
 	if (!formTypeRegex.test(req.body.formType)) {
 		// 9 character input
 		return res.status(400).send('Invalid form-Type');
