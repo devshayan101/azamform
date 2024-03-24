@@ -717,7 +717,7 @@ iframe {
 .mobile-nav-header .btn {
   margin-left: 10px; 
 }
-.btn-custom{
+.btn-cust{
   padding: 0px 5px;
   font-weight: 900;
   /* margin-left: 0.9rem; */
@@ -957,8 +957,8 @@ iframe {
 /* new footer section ends */
 
 @media screen and (max-width: 768px) {
-  .btn-custom{
-    padding: 0px 0px !important;
+  .btn-cust{
+    padding: 0px 5px !important;
     font-weight: 900;
     margin-right: 1rem;
     font-size: 0.9rem;
