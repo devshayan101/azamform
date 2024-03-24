@@ -7,84 +7,10 @@
 
 <!-- <button onclick="togglePlay()" class="btn btn-light play-btn" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; "> -->
 
-    <i class="fa fa-play " onclick="togglePlay()" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; color:black "></i>
+    <i class="fa fa-play" id="music-btn" onclick="togglePlay()" style="position: fixed; bottom: 20px; left: 20px; z-index: 999; color:black "></i>
  
 
-<!-- </button> -->
-    <!-- Contact Section Start -->
-    <!-- <section id="contact" class="section-padding">      
-        <div class="contact-form">
-          <div class="container">
-            <div class="row contact-form-area wow fadeInUp" data-wow-delay="0.4s">          
-              
-              
-            </div>
-          </div>
-        </div>   
-      </section> -->
-      <!-- Contact Section End -->
-    <!-- Footer Section Start -->
 
-    <!-- <footer id="footer" class="footer-area section-padding">
-        <div class="container"> -->
-            <!-- <div class="col-md-6 col-lg-6 col-sm-12"> -->
-                <!-- <div class="footer-right-area wow fadeIn">
-                  <h2>Contact Address</h2>
-                  <div class="footer-right-contact">
-                    
-                    <div class="single-contact">
-                      <div class="contact-icon">
-                        <i class="fa fa-envelope"></i>
-                      </div>
-                      <br>
-                      <p><a href="mailto:tomsaulnier@gmail.com">support@sawadeazam.org</a></p>
-                      <p><a href="mailto:hello@tom.com">info@sawadeazam.org</a></p>
-                    </div>
-
-                    <div class="single-contact">
-                      <div class="contact-icon">
-                        <i class="fa fa-phone"></i>
-                      </div>
-                      <br>
-                      <p><a href="#">+91 7300864998</a></p>
-                      <p><a href="#">+91 7300864998</a></p>
-                    </div>
-
-                    <div class="single-contact">
-                        <div class="contact-icon">
-                          <i class="fa fa-map-marker"></i>
-                        </div>
-                        <br>
-                        <p> Sawad-E-Aazam, Qazipur, Shahjahanpur, Uttar Pradesh, India - 242001</p>
-                      </div>
-                  </div>
-                </div> -->
-              <!-- </div> -->
-          <!-- <div class="row">
-            <div class="col-md-12">
-              <div class="footer-text text-center wow fadeInDown" data-wow-delay="0.3s">
-                <ul class="social-icon">
-                  <li>
-                    <a class="facebook" href="https://www.facebook.com/profile.php?id=61556524457707&mibextid=kFxxJD"><i class="icon-social-facebook"></i></a>
-                  </li> -->
-                  <!-- <li>
-                    <a class="twitter" href="#"><i class="icon-social-twitter"></i></a>
-                  </li> -->
-                  <!-- <li>
-                    <a class="instagram" href="https://www.instagram.com/sawadeazamofficial?igsh=MThod3Nnd3B2aWV1aQ=="><i class="icon-social-instagram"></i></a>
-                  </li>
-                  <li>
-                    <a class="youtube" href="https://youtube.com/@sawadeazamglobal?si=YWHCBoZyaN29DnmK"><i class="icon-social-youtube"></i></a>
-                  </li>
-                  
-                </ul>
-                <p>Copyright © 2024 Sawad-E-Azam All Right Reserved</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer> -->
-      <!-- Footer Section End -->
   
 
       <!-- <section>Footer Example 4</section> -->
@@ -160,10 +86,15 @@
       <script>
         function togglePlay() {
           var music = document.getElementById("music");
+          var musicBtn = document.getElementById('music-btn');
           if (music.paused) {
             music.play();
+            musicBtn.classList.remove('fa-play');
+            musicBtn.classList.add('fa-pause');
           } else {
             music.pause(); 
+            musicBtn.classList.remove('fa-pause');
+            musicBtn.classList.add('fa-play');
           }
         }
       </script>
