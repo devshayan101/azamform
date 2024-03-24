@@ -4,10 +4,6 @@ require('dotenv').config();
 const axios = require('axios');
 const uniqid = require('uniqid');
 const SHA256 = require('crypto-js/sha256');
-const CryptoJS = require('crypto-js');
-const store = require('store');
-const http = require('http');
-const crypto = require('crypto');
 let app = express();
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,15 +15,15 @@ app.use(express.urlencoded({ extended: true }));
 // const hexString = randomBytes.toString(CryptoJS.enc.Hex);
 
 let tx_uuid = uniqid();
-store.set('uuid', { tx: tx_uuid });
 const config = {
-	hostUrl: process.env.PHONEPE_URL, //|| 'https://api-preprod.phonepe.com/apis/pg-sandbox',
+	hostUrl: process.env.PHONEPE_URL || 'https://api-preprod.phonepe.com/apis/pg-sandbox',
 	merchantId: process.env.MERCHANT_ID || 'PGTESTPAYUAT',
 	saltKey: process.env.SALT_KEY || '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399',
 	saltIndex: process.env.SALT_INDEX || '1',
 	apiEndPoint: process.env.API_END_POINT || '/pg/v1/pay',
 	merchantTransactionId: tx_uuid,
 	merchantUserId: uniqid(),
+	redirectUrl: process.env.PROD_REDIRECT_URL || 'http://localhost:3000',
 };
 // const agent = new http.Agent({ keepAlive: true });
 
@@ -38,7 +34,7 @@ router.get('/', (req, res) => {
 router.post('/pay', (req, res) => {
 	//validate amount and phone input
 	// Validate amount
-	const amountRegex = /^\d{1,4}(\.\d{1,2})?$/;
+	const amountRegex = /^\d{1,6}(\.\d{1,2})?$/;
 	if (!amountRegex.test(req.body.amount)) {
 		return res.status(400).send('Invalid amount');
 	}
@@ -49,14 +45,27 @@ router.post('/pay', (req, res) => {
 		return res.status(400).send('Invalid phone number');
 	}
 	//validate txnid
+
+	const txnidRegex = /^\d{13}$/;
+	if (!txnidRegex.test(req.body.txnid)) {
+		// 13 digit input
+		return res.status(400).send('Invalid transactionId');
+	}
 	console.log(req.body.txnid);
+
+	const formTypeRegex = /^\w{9}$/;
+	if (formTypeRegex.test(req.body.formType)) {
+		// 9 character input
+		return res.status(400).send('Invalid form-Type');
+	}
+	console.log(req.body.formType);
 
 	const payload = {
 		merchantId: config.merchantId,
 		merchantTransactionId: req.body.txnid,
 		merchantUserId: req.body.phone,
 		amount: 100 * req.body.amount, //take input from form //validate input
-		redirectUrl: `https://sawadeazam.org/pe/redirect-url/${req.body.txnid}`,
+		redirectUrl: `${config.redirectUrl}/pe/redirect-url/${req.body.txnid}/${req.body.formType}`,
 		redirectMode: 'REDIRECT',
 		mobileNumber: req.body.phone, //take input from form //validate input
 		paymentInstrument: {
@@ -65,7 +74,7 @@ router.post('/pay', (req, res) => {
 	};
 
 	console.log(payload);
-	const payloadBuffer = Buffer.from(JSON.stringify(payload));
+	const payloadBuffer = Buffer.from(JSON.stringify(payload), 'utf-8');
 	const base64EncodedPayload = payloadBuffer.toString('base64');
 
 	const xVerify = SHA256(base64EncodedPayload + config.apiEndPoint + config.saltKey) + '###' + config.saltIndex;
@@ -139,8 +148,8 @@ router.post('/pay', (req, res) => {
 });
 
 //transaction status check
-router.get('/redirect-url/:merchantTransactionId', (req, res) => {
-	const { merchantTransactionId } = req.params;
+router.get('/redirect-url/:merchantTransactionId/:formType', (req, res) => {
+	const { merchantTransactionId, formType } = req.params;
 	console.log('merchantTransactionId:', merchantTransactionId);
 	console.log('merchantId:', config.merchantId);
 	const xVerify = SHA256('/pg/v1/status/' + config.merchantId + '/' + merchantTransactionId + config.saltKey) + '###' + config.saltIndex;
@@ -163,7 +172,13 @@ router.get('/redirect-url/:merchantTransactionId', (req, res) => {
 			console.log(response.data);
 			if (response.data.code === 'PAYMENT_SUCCESS') {
 				//handle payment success
-				return res.render('pePaymentSuccess.ejs', { data: response.data });
+				console.log(formType);
+				if (formType === 'peForm') {
+					return res.render('pePaymentSuccess.ejs', { data: response.data });
+				} else {
+					//suffa form
+					return res.render('registration.ejs', { data: response.data });
+				}
 			} else {
 				throw new Error('Payment Failed');
 			}

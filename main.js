@@ -51,7 +51,6 @@ const upload = multer({
 // Handle POST request for file upload
 app.post('/registraion-upload', upload.single('photo'), (req, res) => {
 	console.log('file', req.file);
-	console.log('files:', req.files);
 
 	var obj = {
 		name: req.body.name,
