@@ -721,7 +721,7 @@ iframe {
   padding: 0px 5px;
   font-weight: 900;
   /* margin-left: 0.9rem; */
-  font-size: 1rem;
+  font-size: 1.2rem;
   border-radius: 15px;
   background-color: #28a745 !important;
   color: white !important;
@@ -961,7 +961,7 @@ iframe {
     padding: 0px 5px !important;
     font-weight: 900;
     margin-right: 1rem;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     border-radius: 15px;
   }
   .navbar-header {
