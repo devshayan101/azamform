@@ -736,7 +736,7 @@ iframe {
   /* background: #4285F4; */
   /* box-shadow: 0 0 0 0 rgba(66, 244, 176, 0.5); */
   transition: box-shadow 0.3s ease; /* Smooth transition for the box-shadow property */
-  animation: animate-shadow 1s infinite alternate ;
+  animation: animate-shadow 2s infinite alternate ;
 }
 @keyframes animate-shadow {
   0% {
