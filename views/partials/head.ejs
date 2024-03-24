@@ -65,7 +65,8 @@
 							</li>
 
 							<li class="nav-item">
-								<a class="nav-link highlight" href="/registration"> رجسٹریشن کریں /Register now </a>
+								<a class="nav-link highlight animated-shadow" href="https://forms.gle/oErB9eabKCBq3hDs8n"> رجسٹریشن کریں /Register now </a>
+								<!-- <a class="nav-link highlight" href="/registration"> رجسٹریشن کریں /Register now </a> -->
 							</li>
 						</ul>
 					</div>
@@ -76,8 +77,7 @@
 						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-
-						<button class="btn-custom btn-success">Imdad</button>
+						<button class="btn-custom" id="imdadBtn">IMDAD</button>
 					</div>
 					<ul class="onepage-nev mobile-menu">
 						<li>
@@ -104,7 +104,8 @@
 						</li>
 
 						<li>
-							<a href="/registration" class="highlight"> رجسٹریشن کریں /Register now </a>
+							<a href="https://forms.gle/oErB9eabKCBq3hDs8" class="highlight animated-shadow"> رجسٹریشن کریں /Register now </a>
+							<!-- <a href="/registration" class="highlight"> رجسٹریشن کریں /Register now </a> -->
 						</li>
 					</ul>
 				</div>
@@ -112,5 +113,12 @@
 			</nav>
 			<!-- Navbar End -->
 		</header>
+		<script>
+			const imdadBtn = document.getElementById('imdadBtn');
+
+			imdadBtn.addEventListener('click', () => {
+				window.location.href = '/pe/';
+			});
+		</script>
 	</body>
 </html>
