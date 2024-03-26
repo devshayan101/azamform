@@ -7,13 +7,6 @@ const SHA256 = require('crypto-js/sha256');
 let app = express();
 app.use(express.urlencoded({ extended: true }));
 
-// const now = Date.now(); // 1675593338637
-
-// const timeString = now.toString();
-
-// const randomBytes = CryptoJS.lib.WordArray.random(8);
-// const hexString = randomBytes.toString(CryptoJS.enc.Hex);
-
 let tx_uuid = uniqid();
 const config = {
 	hostUrl: process.env.PHONEPE_URL || 'https://api-preprod.phonepe.com/apis/pg-sandbox',
