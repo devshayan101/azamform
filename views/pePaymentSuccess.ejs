@@ -6,8 +6,9 @@
 			<center>
 				<h1 class="alert-heading"><%= data.message %></h1>
 				<hr />
+				<h4>Jazakallahu Fiddarain</h4>
 				<h4>
-					Your payment is successfully registered at Sawad-E-Aazam. <br />
+					Your payment is successfully registered at Sawad-E-Azam. <br />
 					<hr />
 					Transaction Details: <br /><br />
 				</h4>
@@ -16,6 +17,11 @@
 					<b>Merchant Transaction Id:</b> <%= data.data.merchantTransactionId %> <br /><br />
 					<b>Transaction Id:</b> <%= data.data.transactionId %> <br /><br />
 					<b>PG-Transaction Id:</b> <%= data.data.paymentInstrument.pgTransactionId %> <br />
+					<br />
+
+					<!-- Add current date/time -->
+					<b>Date:</b> <%= new Date() %> <br /><br />
+					<b>Time:</b> <%= new Date().toLocaleTimeString() %>
 				</h5>
 			</center>
 			<br />
