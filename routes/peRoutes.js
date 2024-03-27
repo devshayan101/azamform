@@ -23,8 +23,6 @@ const config = {
 
 router.get('/', (req, res) => {
 	res.render('pePaymentForm.ejs');
-
-	// krfbrfbrub
 });
 
 router.post('/pay', (req, res) => {
@@ -119,12 +117,14 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType', (
 	if (!phoneRegex.test(phone)) {
 		return res.status(400).send('Invalid phone number');
 	}
+
 	//validate txnid
 	const txnidRegex = /^\d{13}$/;
 	if (!txnidRegex.test(merchantTransactionId)) {
 		// 13 digit input
 		return res.status(400).send('Invalid transactionId');
 	}
+
 	//validate form type
 	const formTypeRegex = /^\w{5,9}$/;
 	if (!formTypeRegex.test(formType)) {
@@ -137,6 +137,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType', (
 		// 4-5 character input
 		return res.status(400).send('Invalid imdad-Type');
 	}
+
 	console.log(formType, phone, imdadType);
 
 	console.log('merchantTransactionId:', merchantTransactionId);
@@ -155,10 +156,12 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType', (
 		},
 		data: {},
 	};
+
 	axios
 		.request(options)
 		.then(function (response) {
 			console.log(response.data);
+
 			//data from peForm
 			const paymentObj = {
 				phone: phone,
@@ -170,6 +173,16 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType', (
 				'payment-status': response.data.code,
 				formType: formType,
 			};
+
+			//check for merchantTransactionId in database using mongoose, if present dont save
+			PePayment.findOne({ merchantTransactionId: merchantTransactionId }).then((exists) => {
+				if (exists) {
+					return res.status(200).json({
+						message: 'Transaction already exists',
+					});
+				}
+			});
+
 			const payment = new PePayment(paymentObj);
 			payment
 				.save()

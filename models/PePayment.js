@@ -12,7 +12,7 @@ const pePaymentSchema = new mongoose.Schema(
 		},
 		imdadType: {
 			type: String,
-			enum: ['zakat', 'imdad', 'fitra', 'sadqa', 'ushr'],
+			enum: ['Zakat', 'Imdad', 'Fitra', 'Sadqa', 'Ushr'],
 			required: true,
 		},
 		merchantTransactionId: {
