@@ -33,8 +33,9 @@ const pePaymentSchema = new mongoose.Schema(
 			type: String,
 			default: 'peForm',
 		},
+		createdAt: { type: Date, default: Date.now },
 	},
-	{ timestamps: true, timezone: 'Asia/Kolkata' },
+	// { timestamps: true, timezone: 'Asia/Kolkata' },
 );
 
 module.exports = mongoose.model('PePayment', pePaymentSchema);
