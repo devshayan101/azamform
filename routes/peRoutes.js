@@ -10,8 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 let tx_uuid = uniqid();
 const config = {
-	// process.env.PHONEPE_URL ||
-	hostUrl: 'https://api-preprod.phonepe.com/apis/pg-sandbox',
+	//
+	hostUrl: process.env.PHONEPE_URL || 'https://api-preprod.phonepe.com/apis/pg-sandbox',
 	merchantId: process.env.MERCHANT_ID || 'PGTESTPAYUAT',
 	saltKey: process.env.SALT_KEY || '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399',
 	saltIndex: process.env.SALT_INDEX || '1',
@@ -162,7 +162,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType', (
 			//data from peForm
 			const paymentObj = {
 				phone: phone,
-				amount: response.data.data.amount,
+				amount: response.data.data.amount / 100, //convert to actual amount
 				imdadType: imdadType,
 				// merchantId: config.merchantId,
 				merchantTransactionId: merchantTransactionId,
