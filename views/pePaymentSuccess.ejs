@@ -13,15 +13,16 @@
 					Transaction Details: <br /><br />
 				</h4>
 				<h5>
-					<b>Amount: Rs.</b> <%= data.data.amount/100 %> <br /><br />
-					<b>Merchant Transaction Id:</b> <%= data.data.merchantTransactionId %> <br /><br />
-					<b>Transaction Id:</b> <%= data.data.transactionId %> <br /><br />
-					<b>PG-Transaction Id:</b> <%= data.data.paymentInstrument.pgTransactionId %> <br />
+					<b>Amount: Rs.</b> <%= data.amount/100 %> <br /><br />
+					<b>Merchant Transaction Id:</b> <%= data.merchantTransactionId %> <br /><br />
+					<b>Transaction Id:</b> <%= data.transactionId %> <br /><br />
+					<b>Payment Type:</b> <%= data.imdadType %> <br />
 					<br />
-
+					<b>Date & Time:</b><%= data.updatedAt %>
 					<!-- Add current date/time -->
-					<b>Date:</b> <%= new Date().toLocaleDateString('in-IN') %> <br /><br />
-					<b>Time:</b> <%= new Date().toLocaleTimeString('in-IN') %>
+					<!-- <b>Date:</b> <%= new Date().toLocaleDateString('en-IN') %> <br /><br />
+					<b>Time:</b> <%= new Date().toLocaleTimeString('en-IN', {hour: 'numeric', minute: 'numeric', hour12: true}) %> -->
+					<!-- <b>Time:</b> <%= new Date().getTimezoneOffset() / 60 %> -->
 				</h5>
 			</center>
 			<br />
