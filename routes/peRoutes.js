@@ -4,7 +4,7 @@ require('dotenv').config();
 const axios = require('axios');
 const uniqid = require('uniqid');
 const SHA256 = require('crypto-js/sha256');
-const PePayment = require('../models/pePayment.js');
+const PePayment = require('../models/PePayment.js');
 let app = express();
 app.use(express.urlencoded({ extended: true }));
 
