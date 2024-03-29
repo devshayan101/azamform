@@ -20,7 +20,10 @@
 					<b>Transaction Id:</b> <%= data.transactionId %> <br /><br />
 					<b>Payment Type:</b> <%= data.imdadType %> <br />
 					<br />
-					<b>Date & Time:</b><%= data.updatedAt %>
+					<b>Date & Time:</b>
+					<div id="indianTime"></div>
+
+					<div id="utcTime" style="display: none"><%= data.createdAt %></div>
 				</h5>
 			</center>
 			<br />
@@ -29,5 +32,46 @@
 		</div>
 	</div>
 </section>
+<script>
+	// Function to convert UTC time to Indian Standard Time (IST) and format it in 12-hour format with date
+	function convertUTCtoIST(utcDateString) {
+		// Create a Date object from the UTC date string
+		const utcDate = new Date(utcDateString);
 
+		// Get UTC time in milliseconds
+		const utcTime = utcDate.getTime();
+
+		// Calculate the offset for Indian Standard Time (5 hours and 30 minutes) in milliseconds
+		const offsetMilliseconds = 5.5 * 60 * 60 * 1000;
+
+		// Convert UTC time to IST by adding the offset
+		const istTime = utcTime + offsetMilliseconds;
+
+		// Create a new Date object for IST
+		const istDate = new Date(istTime);
+
+		// Get IST date components
+		const istYear = istDate.getFullYear();
+		const istMonth = ('0' + (istDate.getMonth() + 1)).slice(-2);
+		const istDay = ('0' + istDate.getDate()).slice(-2);
+		const istHours = ('0' + (((istDate.getHours() + 11) % 12) + 1)).slice(-2);
+		const istMinutes = ('0' + istDate.getMinutes()).slice(-2);
+		const istAMPM = istDate.getHours() >= 12 ? 'PM' : 'AM';
+
+		// Construct IST time string in 12-hour format
+		const istTimeStr = `${istHours}:${istMinutes} ${istAMPM}`;
+
+		// Construct IST date string
+		const istDateStr = `${istDay}-${istMonth}-${istYear}`;
+
+		// Return formatted IST date and time
+		return `${istDateStr} ${istTimeStr}`;
+	}
+
+	// Example usage
+	const utcDateString = document.getElementById('utcTime').innerText; // Example UTC date string
+	const istDateTime = convertUTCtoIST(utcDateString);
+	document.getElementById('indianTime').innerText = istDateTime;
+	console.log(istDateTime); // Output: 19-02-2024 06:00 PM
+</script>
 <%- include('./partials/bottom.ejs') %>
