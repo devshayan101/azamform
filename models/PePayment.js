@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const pePaymentSchema = new mongoose.Schema(
 	{
+		name: {
+			type: String,
+		},
 		phone: {
 			type: String,
 			required: true,

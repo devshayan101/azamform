@@ -26,6 +26,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/pay', (req, res) => {
+	// Validate name
+	const nameRegex = /^[A-Za-z]{1,30}$/;
+	if (!nameRegex.test(req.body.name)) {
+		return res.status(400).send('Invalid name input');
+	}
+
 	// Validate amount
 	const amountRegex = /^\d{1,6}(\.\d{1,2})?$/;
 	if (!amountRegex.test(req.body.amount)) {
@@ -56,6 +62,7 @@ router.post('/pay', (req, res) => {
 		// 9 character input
 		return res.status(400).send('Invalid imdad-Type');
 	}
+
 	console.log(req.body.imdadType);
 
 	const payload = {
@@ -63,7 +70,7 @@ router.post('/pay', (req, res) => {
 		merchantTransactionId: req.body.txnid,
 		merchantUserId: req.body.phone,
 		amount: 100 * req.body.amount, //take input from form //validate input
-		redirectUrl: `${config.redirectUrl}/pe/redirect-url/${req.body.txnid}/${req.body.formType}/${req.body.phone}/${req.body.imdadType}`,
+		redirectUrl: `${config.redirectUrl}/pe/redirect-url/${req.body.txnid}/${req.body.formType}/${req.body.phone}/${req.body.imdadType}/${req.body.name}`,
 		redirectMode: 'REDIRECT',
 		mobileNumber: req.body.phone, //take input from form //validate input
 		paymentInstrument: {
@@ -109,8 +116,14 @@ router.post('/pay', (req, res) => {
 });
 
 //transaction status check
-router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType', (req, res) => {
-	const { merchantTransactionId, formType, phone, imdadType } = req.params;
+router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:name', (req, res) => {
+	const { merchantTransactionId, formType, phone, imdadType, name } = req.params;
+
+	// Validate name
+	const nameRegex = /^[A-Za-z]{1,30}$/;
+	if (!nameRegex.test(name)) {
+		return res.status(400).send('Invalid name input');
+	}
 
 	// Validate phone
 	const phoneRegex = /^\d{10}$/;
