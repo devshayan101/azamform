@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 
 router.post('/pay', (req, res) => {
 	// Validate name
-	const nameRegex = /^[A-Za-z]{1,30}$/;
+	const nameRegex = /^[A-Za-z\s]{3,30}$/;
 	if (!nameRegex.test(req.body.name)) {
 		return res.status(400).send('Invalid name input');
 	}
@@ -120,7 +120,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 	const { merchantTransactionId, formType, phone, imdadType, name } = req.params;
 
 	// Validate name
-	const nameRegex = /^[A-Za-z]{1,30}$/;
+	const nameRegex = /^[A-Za-z\s]{3,30}$/;
 	if (!nameRegex.test(name)) {
 		return res.status(400).send('Invalid name input');
 	}
@@ -177,6 +177,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 
 			//data from peForm
 			const paymentObj = {
+				name: name,
 				phone: phone,
 				amount: response.data.data.amount / 100, //convert to actual amount
 				imdadType: imdadType,

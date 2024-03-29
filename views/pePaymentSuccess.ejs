@@ -13,16 +13,14 @@
 					Transaction Details: <br /><br />
 				</h4>
 				<h5>
+					<b>Name: </b> <%= data.name %> <br /><br />
+					<b>Phone: </b> <%= data.phone %> <br /><br />
 					<b>Amount: Rs.</b> <%= data.amount %> <br /><br />
 					<b>Merchant Transaction Id:</b> <%= data.merchantTransactionId %> <br /><br />
 					<b>Transaction Id:</b> <%= data.transactionId %> <br /><br />
 					<b>Payment Type:</b> <%= data.imdadType %> <br />
 					<br />
 					<b>Date & Time:</b><%= data.updatedAt %>
-					<!-- Add current date/time -->
-					<!-- <b>Date:</b> <%= new Date().toLocaleDateString('en-IN') %> <br /><br />
-					<b>Time:</b> <%= new Date().toLocaleTimeString('en-IN', {hour: 'numeric', minute: 'numeric', hour12: true}) %> -->
-					<!-- <b>Time:</b> <%= new Date().getTimezoneOffset() / 60 %> -->
 				</h5>
 			</center>
 			<br />
