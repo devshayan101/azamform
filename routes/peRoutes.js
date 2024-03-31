@@ -188,15 +188,15 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 				formType: formType,
 			};
 
-			//check for merchantTransactionId in database using mongoose, if present dont save
-			// PePayment.findOne({ merchantTransactionId: merchantTransactionId }).then((exists) => {
-			// 	if (exists) {
-			// 		console.log('exists:', exists);
-			// 		return res.status(200).json({
-			// 			message: 'Transaction already exists',
-			// 		});
-			// 	}
-			// });
+			check for merchantTransactionId in database using mongoose, if present dont save
+			PePayment.findOne({ merchantTransactionId: merchantTransactionId }).then((exists) => {
+				if (exists) {
+					console.log('exists:', exists);
+					return res.status(200).json({
+						message: 'Transaction already exists',
+					});
+				}
+			});
 
 			const payment = new PePayment(paymentObj);
 			payment
