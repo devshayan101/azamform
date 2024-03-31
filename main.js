@@ -17,7 +17,11 @@ app.use(express.json());
 
 //Public Folder
 app.use(express.static('./public'));
-
+app.use((req, res, next) => {
+	// Make `user` and `authenticated` available in templates
+	res.locals.user = req.user;
+	next();
+});
 const port = process.env.PORT || 3000;
 // app.listen(port, () => console.log(`Server started on port ${port}`))
 mongoose
@@ -105,7 +109,13 @@ app.get('/terms-and-privacy', (req, res) => {
 });
 
 app.get('/registration', (req, res) => {
-	res.render('registration.ejs', { data: '' });
+	// const data = res.locals || ''; //data coming from registration form after payment completion
+
+	// console.log('abcde', res.locals);
+
+	const data = req.query;
+	console.log('query params:', req.query);
+	res.render('registration.ejs', { data: data });
 });
 app.use('/pe', peRoutes); //phonepe payment routes
 // app.use('/pay', payRoutes);

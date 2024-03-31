@@ -17,11 +17,17 @@
                      <%=form.img.data.toString('base64')%>"
 						width="100" />
 					<div>
-						<h5><%= form.name %></h5>
-						<h5><%= form.phone %></h5>
-						<h5><%= form.email %></h5>
-
-						<h5><%= form.address %></h5>
+						<h5>Name: <%= form.name %></h5>
+						<h5>Phone: <%= form.phone %></h5>
+						<h5>Email: <%= form.email %></h5>
+						<h5>Registration Number: <%= form["registration-number"] %></h5>
+						<h5>Address: <%= form.address %></h5>
+						<h5>Gender: <%= form.gender %></h5>
+						<h5>Qualification: <%= form.qualification %></h5>
+						<h5>Payment Details:</h5>
+						<h5>Amount: <%= form.payment.amount %></h5>
+						<h5>Status: Payment Successful</h5>
+						<h5>Transaction Id: <%= form.payment.txnid %></h5>
 						<h5>Object</h5>
 						<h5><%= form %></h5>
 					</div>

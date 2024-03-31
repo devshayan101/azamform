@@ -58,7 +58,7 @@ router.post('/pay', (req, res) => {
 	}
 
 	const imdadTypeRegex = /^\w{5,9}$/;
-	if (!imdadTypeRegex.test(req.body.formType)) {
+	if (!imdadTypeRegex.test(req.body.imdadType)) {
 		// 9 character input
 		return res.status(400).send('Invalid imdad-Type');
 	}
@@ -70,7 +70,7 @@ router.post('/pay', (req, res) => {
 		merchantTransactionId: req.body.txnid,
 		merchantUserId: req.body.phone,
 		amount: 100 * req.body.amount, //take input from form //validate input
-		redirectUrl: `${config.redirectUrl}/pe/redirect-url/${req.body.txnid}/${req.body.formType}/${req.body.phone}/${req.body.imdadType}/${req.body.name}`,
+		redirectUrl: `${config.redirectUrl}/pe/redirect-url/${req.body.txnid}/${req.body.formType}/${req.body.phone}/${req.body.imdadType}/${req.body.name}/abc`,
 		redirectMode: 'REDIRECT',
 		mobileNumber: req.body.phone, //take input from form //validate input
 		paymentInstrument: {
@@ -116,7 +116,7 @@ router.post('/pay', (req, res) => {
 });
 
 //transaction status check
-router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:name', (req, res) => {
+router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:name/:red', (req, res) => {
 	const { merchantTransactionId, formType, phone, imdadType, name } = req.params;
 
 	// Validate name
@@ -145,7 +145,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 		return res.status(400).send('Invalid form-Type');
 	}
 
-	const imdadTypeRegex = /^\w{4,6}$/;
+	const imdadTypeRegex = /^\w{5,9}$/;
 	if (!imdadTypeRegex.test(imdadType)) {
 		// 4-5 character input
 		return res.status(400).send('Invalid imdad-Type');
@@ -189,14 +189,14 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 			};
 
 			// check for merchantTransactionId in database using mongoose, if present dont save
-			PePayment.findOne({ merchantTransactionId: merchantTransactionId }).then((exists) => {
-				if (exists) {
-					console.log('exists:', exists);
-					return res.status(200).json({
-						message: 'Transaction already exists',
-					});
-				}
-			});
+			// PePayment.findOne({ merchantTransactionId: merchantTransactionId }).then((exists) => {
+			// 	if (exists) {
+			// 		console.log('exists:', exists);
+			// 		return res.status(200).json({
+			// 			message: 'Transaction already exists',
+			// 		});
+			// 	}
+			// });
 
 			// save transaction to database if not exists
 			const payment = new PePayment(paymentObj);
@@ -212,7 +212,15 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 							return res.render('pePaymentSuccess.ejs', { data: paymentDatafromDb }); //data from database to be rendered
 						} else {
 							//suffa form
-							return res.render('registration.ejs', { data: response.data });
+							//Save payment data to req.flash
+							// res.locals = { responseData: response.data };
+							// console.log('res.locals', res.locals);
+							// req.flash('paymentData', paymentDatafromDb);
+
+							const queryString = new URLSearchParams(response.data).toString();
+
+							console.log('queryString:', queryString);
+							return res.redirect(303, `/registration?${queryString}`);
 						}
 					} else {
 						throw new Error('Payment Failed');
