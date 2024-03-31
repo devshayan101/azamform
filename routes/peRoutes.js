@@ -188,7 +188,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 				formType: formType,
 			};
 
-			check for merchantTransactionId in database using mongoose, if present dont save
+			// check for merchantTransactionId in database using mongoose, if present dont save
 			PePayment.findOne({ merchantTransactionId: merchantTransactionId }).then((exists) => {
 				if (exists) {
 					console.log('exists:', exists);
@@ -198,6 +198,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 				}
 			});
 
+			// save transaction to database if not exists
 			const payment = new PePayment(paymentObj);
 			payment
 				.save()
