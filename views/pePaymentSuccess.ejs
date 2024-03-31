@@ -23,7 +23,7 @@
 					<b>Date & Time:</b>
 					<div id="indianTime"></div>
 
-					<div id="utcTime" style="display: none"><%= data.createdAt %></div>
+					<div id="utcTime" style="display: block"><%= data.createdAt %></div>
 				</h5>
 			</center>
 			<br />
@@ -71,7 +71,7 @@
 	// Example usage
 	const utcDateString = document.getElementById('utcTime').innerText; // Example UTC date string
 	const istDateTime = convertUTCtoIST(utcDateString);
-	document.getElementById('indianTime').innerText = istDateTime;
+	// document.getElementById('indianTime').innerText = istDateTime;
 	console.log(istDateTime); // Output: 19-02-2024 06:00 PM
 </script>
 <%- include('./partials/bottom.ejs') %>
