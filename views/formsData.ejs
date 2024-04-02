@@ -1,37 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Image Uploading</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-	</head>
+<%- include('./partials/head.ejs') %>
 
-	<body>
-		<div class="container">
-			<h1 class="text-center">Uploaded Images</h1>
-			<div class="row">
-				<% items.forEach(function(form) { %>
-				<div class="col-md-4">
-					<div class="card mb-3">
-						<img src="data:image/<%=form.img.contentType%>;base64, <%=form.img.data.toString('base64')%>" class="card-img-top" alt="..." />
-						<div class="card-body">
-							<h5 class="card-title">Name: <%= form.name %></h5>
-							<p class="card-text">Phone: <%= form.phone %></p>
-							<p class="card-text">Email: <%= form.email %></p>
-							<p class="card-text">Registration Number: <%= form["registration-number"] %></p>
-							<p class="card-text">Address: <%= form.address %></p>
-							<p class="card-text">Gender: <%= form.gender %></p>
-							<p class="card-text">Qualification: <%= form.qualification %></p>
-							<p class="card-text">Payment Details: {</p>
-							<p class="card-text">Amount: <%= form.payment.amount %></p>
-							<p class="card-text">Status: Payment Successful</p>
-							<p class="card-text">Transaction Id: <%= form.payment.txnid %> }</p>
-						</div>
-					</div>
+<div class="container">
+	<h1 class="text-center">Uploaded Images</h1>
+	<div class="row">
+		<% items.forEach(function(form) { %>
+		<div class="col-md-4">
+			<div class="card mb-3">
+				<img src="data:image/<%=form.img.contentType%>;base64, <%=form.img.data.toString('base64')%>" class="card-img-top" alt="..." />
+				<div class="card-body">
+					<h5 class="card-title">Name: <%= form.name %></h5>
+					<p class="card-text">Phone: <%= form.phone %></p>
+					<p class="card-text">Email: <%= form.email %></p>
+					<p class="card-text">Registration Number: <%= form["registration-number"] %></p>
+					<p class="card-text">Address: <%= form.address %></p>
+					<p class="card-text">Gender: <%= form.gender %></p>
+					<p class="card-text">Qualification: <%= form.qualification %></p>
+					<p class="card-text">Payment Details: {</p>
+					<p class="card-text">Amount: <%= form.payment.amount %></p>
+					<p class="card-text">Status: Payment Successful</p>
+					<p class="card-text">Transaction Id: <%= form.payment.txnid %> }</p>
 				</div>
-				<% }) %>
 			</div>
 		</div>
-	</body>
-</html>
+		<% }) %>
+	</div>
+</div>
+<%- include('./partials/head.ejs') %>
