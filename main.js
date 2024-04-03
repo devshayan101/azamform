@@ -92,7 +92,7 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
 		});
 });
 //view forms
-app.get('/forms-view-aX4e3Fa5pJs*3%', (req, res) => {
+app.get('/forms-view-aX4e3Fa5pJs2451iop', (req, res) => {
 	Form.find()
 		.then((forms) => {
 			res.render('formsData', { items: forms });
