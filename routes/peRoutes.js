@@ -78,7 +78,7 @@ router.post('/pay', (req, res) => {
 		},
 	};
 
-	console.log(payload);
+	console.log('Amount is 100x:', payload);
 	const payloadBuffer = Buffer.from(JSON.stringify(payload), 'utf-8');
 	const base64EncodedPayload = payloadBuffer.toString('base64');
 

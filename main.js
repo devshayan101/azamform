@@ -95,8 +95,8 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
 app.get('/forms-view-aX4e3Fa5pJsr', (req, res) => {
 	Form.find()
 		.then((forms) => {
-			// res.render('formsData', { items: forms });
-			res.render('pePaymentSuccess.ejs', { items: forms });
+			res.render('formsData', { items: forms });
+			// res.send(forms);
 		})
 		.catch((err) => console.error(err));
 });
