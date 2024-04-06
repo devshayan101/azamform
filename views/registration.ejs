@@ -24,43 +24,16 @@
       enctype="application/x-www-form-urlencoded" >
 
     <% } %>
-    <center>
-    <div class="row">
-
-      <div class="form-group col" style="margin:auto ;">
-        <b><label for="gender">صنف / Gender
-        </label></b>
-        <div class="form-check">
-          <input type="radio" class="form-check-input" id="male" name="gender" value="male">
-          <label class="form-check-label" for="male">Male/مذکر</label>
-        </div>
-        <div class="form-check">
-          <input type="radio" class="form-check-input" id="female" name="gender" value="female">
-          <label class="form-check-label" for="female">Female/مونث
-          </label>
-        </div>
-      </div>
-
-      <div class="form-group col" style="margin:auto ;">
-        <b>><label for="gender">تعلیم / Qualification
-        </label></b>
-        <div class="form-check">
-          <input type="radio" class="form-check-input" id="student" name="qualification" value="student">
-          <label class="form-check-label" for="student">Student/طالب علم ہیں۔
-          </label>
-        </div>
-
-        <div class="form-check">
-          <input type="radio" class="form-check-input" id="completedEducation" name="qualification" value="completedEducation">
-          <label class="form-check-label" for="completedEducation">Completed education/تعلیم مکمل ہو چکی۔
-          </label>
-        </div>
-      </div>
-      
-    </div>
-  </center><br>
+    
   <div class="form-group">
-    <label for="contact">رابطہ نمبر / Contact Number [10 digit Indian Number]
+    <label for="name">نام / Name
+      </label>
+    <input type="text" class="form-control" id="name" placeholder="Enter Full Name" name="name"  <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %> minlength="3" value=<%= data.firstname %> >
+    
+  </div>
+
+  <div class="form-group">
+    <label for="contact">رابطہ نمبر / Phone Number
       </label>
     <input type="tel" class="form-control" name="phone" id="phone" required pattern="\d{10}" placeholder="10 digit Phone number" value=<%= data.phone %> >
     <div class="invalid-feedback">
@@ -68,6 +41,10 @@
     </div>        
   </div>
 
+
+  
+    
+      
   <% if(data.code === "PAYMENT_SUCCESS"){ %>
 
 
@@ -100,17 +77,41 @@
     </center>
     <% } %>
 
-
-    <br>
-      <div class="form-group">
-        <label for="name">نام / Name
-          </label>
-        <input type="text" class="form-control" id="name" placeholder="Name" name="name"  <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %> minlength="3" value=<%= data.firstname %> >
+    <center>
+      <div class="row">
+  
+        <div class="form-group col" style="margin:auto ;">
+          <b><label for="gender">صنف / Gender
+          </label></b>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="male" name="gender" value="male">
+            <label class="form-check-label" for="male">Male/مذکر</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="female" name="gender" value="female">
+            <label class="form-check-label" for="female">Female/مونث
+            </label>
+          </div>
+        </div>
+  
+        <div class="form-group col" style="margin:auto ;">
+          <b>><label for="gender">تعلیم / Qualification
+          </label></b>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="student" name="qualification" value="student">
+            <label class="form-check-label" for="student">Student/طالب علم ہیں۔
+            </label>
+          </div>
+  
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="completedEducation" name="qualification" value="completedEducation">
+            <label class="form-check-label" for="completedEducation">Completed education/تعلیم مکمل ہو چکی۔
+            </label>
+          </div>
+        </div>
         
       </div>
-    
-      
-
+    </center><br>
       <div class="form-group">
         <label for="email">  ای میل/ E-Mail </label>
         <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value=<%= data.email %>  <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %>>   
