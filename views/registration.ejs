@@ -62,7 +62,7 @@
   <div class="form-group">
     <label for="contact">رابطہ نمبر / Contact Number [10 digit Indian Number]
       </label>
-    <input type="tel" class="form-control" name="phone" id="phone" required pattern="\d{10}" placeholder="0123456789" value=<%= data.phone %> >
+    <input type="tel" class="form-control" name="phone" id="phone" required pattern="\d{10}" placeholder="10 digit Phone number" value=<%= data.phone %> >
     <div class="invalid-feedback">
       Please enter a 10 digit phone number.
     </div>        
@@ -105,25 +105,21 @@
       <div class="form-group">
         <label for="name">نام / Name
           </label>
-        <input type="text" class="form-control" id="first_name" placeholder="Name" name="name"  <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %> minlength="3" value=<%= data.firstname %> >
-        <div class="invalid-feedback">
-          Please enter a name with at least 3 characters.
-        </div>
+        <input type="text" class="form-control" id="name" placeholder="Name" name="name"  <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %> minlength="3" value=<%= data.firstname %> >
+        
       </div>
     
       
 
       <div class="form-group">
-        <label for="email">  ای میل ایڈریس/ E-Mail Address </label>
+        <label for="email">  ای میل/ E-Mail </label>
         <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value=<%= data.email %>  <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %>>   
-        <div class="invalid-feedback">
-          Please enter a valid email address.
-        </div>
-        <input type="hidden" class="form-control" name="amount" id="amount" value="200.00">
-				<input type="hidden" class="form-control" id="formType" name="formType" value="SuffaForm" />
-				<input type="hidden" class="form-control" id="imdadType" name="imdadType" value="SuffaFee" />
-        <input type="hidden" id="txnid" class="txnid" name="txnid" >
-        <input type="hidden" id="registration" class="txnid" name="registration" >
+        
+        <input type="hidden" id="amount" name="amount" value="200.00">
+				<input type="hidden" id="formType" name="formType" value="SuffaForm" />
+				<input type="hidden" id="imdadType" name="imdadType" value="SuffaFee" />
+        <input type="hidden" id="txnid"  name="txnid" >
+        <input type="hidden" id="registration"  name="registration" >
         <!--<input type="hidden" id="productinfo" class="productinfo" name="productinfo" value="suffa-essay-competetion">
         <input type="hidden" id="surl" class="surl" name="surl" value="https://sawadeazam.org/pay/response">
         <input type="hidden" id="furl" class="furl" name="furl" value="https://sawadeazam.org/pay/response">
@@ -135,9 +131,7 @@
         <label for="address">پتا / Address
           </label>
         <textarea class="form-control" id="address" name="address" rows="2" minlength="10" placeholder="village / city , district, state" <% if(data.code === "PAYMENT_SUCCESS"){ %> required <% } %> ></textarea>
-        <div class="invalid-feedback">
-          Please enter an address with at least 10 characters.
-        </div>
+        
       </div>
 
       <div class="form-group">
@@ -363,4 +357,50 @@
   </div>
 </section>
  <!-- Competetion rules section ends -->
+
+ <script>
+  document.getElementById('myForm').addEventListener('submit', function(event) {
+      // Prevent the form from submitting by default
+      event.preventDefault();
+  
+      // Get the form fields
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+
+      // Regular expressions for validation
+      const nameRegex = /^[a-zA-Z\s]+$/; // Only allows letters and spaces
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Basic email validation
+      const phoneRegex = /^\d{10}$/; // Exactly 10 digits
+      const addressRegex = /^\d+\s[A-z]+\s[A-z]+/;
+
+      // Validate the name field
+      if (!nameRegex.test(name)) {
+          alert('Name can only contain letters and spaces.');
+          return;
+      }
+  
+      // Validate the email field
+      if (!emailRegex.test(email)) {
+          alert('Please enter a valid email address.');
+          return;
+      }
+  
+      // Validate the phone field
+      if (!phoneRegex.test(phone)) {
+          alert('Please enter a valid phone number.');
+          return;
+      }
+  
+      if (!addressRegex.test(address)) {
+        alert('Please enter a valid address. Example: "123 Main St"');
+        return;
+      }
+
+      // If all validations pass, submit the form
+      this.submit();
+  });
+  </script>
+
 <%- include('./partials/bottom.ejs') %>

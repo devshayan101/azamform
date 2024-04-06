@@ -54,7 +54,46 @@ const upload = multer({
 });
 // Handle POST request for file upload
 app.post('/registraion-upload', upload.single('photo'), (req, res) => {
+	//form submission after payment is not checcking form fields input at server side
+	//enter conditions for form check
 	console.log('file', req.file);
+	// Validate name
+	const nameRegex = /^[A-Za-z\s]{3,30}$/;
+	if (!nameRegex.test(req.body.name)) {
+		return res.status(400).send('Invalid name input');
+	}
+
+	// Validate amount
+	const amountRegex = /^\d{1,6}(\.\d{1,2})?$/;
+	if (!amountRegex.test(req.body.amount)) {
+		return res.status(400).send('Invalid amount');
+	}
+
+	// Validate phone
+	const phoneRegex = /^\d{10}$/;
+	if (!phoneRegex.test(req.body.phone)) {
+		return res.status(400).send('Invalid phone number');
+	}
+
+	//validate txnid
+	const txnidRegex = /^\d{13}$/;
+	if (!txnidRegex.test(req.body.txnid)) {
+		// 13 digit input
+		return res.status(400).send('Invalid transactionId');
+	}
+	console.log(req.body.txnid);
+
+	const formTypeRegex = /^\w{5,9}$/;
+	if (!formTypeRegex.test(req.body.formType)) {
+		// 9 character input
+		return res.status(400).send('Invalid form-Type');
+	}
+
+	const imdadTypeRegex = /^\w{5,9}$/;
+	if (!imdadTypeRegex.test(req.body.imdadType)) {
+		// 9 character input
+		return res.status(400).send('Invalid imdad-Type');
+	}
 
 	var obj = {
 		name: req.body.name,
@@ -91,10 +130,12 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
 			res.sendStatus(500);
 		});
 });
+
 //view forms
 app.get('/forms-view-aX4e3Fa5pJsr', (req, res) => {
 	Form.find()
 		.then((forms) => {
+			console.log('items:', forms);
 			res.render('formsData', { items: forms });
 			// res.send(forms);
 		})
@@ -116,6 +157,8 @@ app.get('/registration', (req, res) => {
 
 	const data = req.query;
 	console.log('query params:', req.query);
+	//form submission after payment is not checcking form fields input at server side
+
 	res.render('registration.ejs', { data: data });
 });
 app.use('/pe', peRoutes); //phonepe payment routes

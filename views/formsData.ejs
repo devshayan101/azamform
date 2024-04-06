@@ -1,6 +1,7 @@
 <%- include('./partials/head.ejs') %> <br /><br /><br />
 <div class="container">
-	<h1 class="text-center">Uploaded Images</h1>
+	<% if(items!==[]) { %>
+	<h1 class="text-center">Forms Data</h1>
 	<div class="row">
 		<% items.forEach(function(form) { %>
 		<div class="col-md-4">
@@ -21,7 +22,13 @@
 				</div>
 			</div>
 		</div>
-		<% }) %>
+		<% }) %> <% } else { %>
+		<br /><br />
+		<hr />
+		<center>
+			<h2>No Forms Submitted Yet</h2>
+		</center>
+		<% } %>
 	</div>
 </div>
 <%- include('./partials/bottom.ejs') %>

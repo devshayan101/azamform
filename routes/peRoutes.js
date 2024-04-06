@@ -43,6 +43,7 @@ router.post('/pay', (req, res) => {
 	if (!phoneRegex.test(req.body.phone)) {
 		return res.status(400).send('Invalid phone number');
 	}
+
 	//validate txnid
 	const txnidRegex = /^\d{13}$/;
 	if (!txnidRegex.test(req.body.txnid)) {
@@ -221,6 +222,7 @@ router.get('/redirect-url/:merchantTransactionId/:formType/:phone/:imdadType/:na
 
 							console.log('queryString:', queryString);
 							return res.redirect(303, `/registration?${queryString}`);
+							//form submission after payment is not checcking form fields input at server side
 						}
 					} else {
 						throw new Error('Payment Failed');
