@@ -95,6 +95,12 @@ app.post('/registraion-upload', upload.single('photo'), (req, res) => {
 		return res.status(400).send('Invalid imdad-Type');
 	}
 
+	const addressRegex = /^\d+\s[A-z]+\s[A-z]+/;
+	if (!imdadTypeRegex.test(req.body.address)) {
+		// 9 character input
+		return res.status(400).send('Invalid Address input!');
+	}
+
 	var obj = {
 		name: req.body.name,
 		phone: req.body.phone,
