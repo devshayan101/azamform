@@ -58,7 +58,7 @@ router.post('/pay', (req, res) => {
 		return res.status(400).send('Invalid form-Type');
 	}
 
-	const imdadTypeRegex = /^\w{5,9}$/;
+	const imdadTypeRegex = /^\w{3,9}$/;
 	if (!imdadTypeRegex.test(req.body.imdadType)) {
 		// 9 character input
 		return res.status(400).send('Invalid imdad-Type');
